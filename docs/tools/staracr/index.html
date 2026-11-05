@@ -310,6 +310,10 @@ function renderTests(){
 }
 
 renderComp();renderMine();renderDSD();renderFC();renderTests();
+/* Embed auto-height: tells a parent page (e.g. a Blogger post) how tall the tool is. Harmless when not embedded. */
+(function(){ if(window.parent===window) return; let last=0;
+  const send=()=>{const h=Math.ceil(document.documentElement.scrollHeight); if(h!==last){last=h; try{window.parent.postMessage({type:"staracr-height",height:h},"*")}catch(e){}}};
+  try{new ResizeObserver(send).observe(document.documentElement)}catch(e){setInterval(send,800)} send(); })();
 </script>
 
 </body></html>
