@@ -1,0 +1,101 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>∞ACR Ball – Self-Resolving Acronym Engine</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{--bg:#eef1f4;--panel:#fff;--ink:#18212b;--muted:#5b6876;--line:#d3dae2;--accent:#1f5f8b;--accent-soft:#dceaf4;--ok:#1d7a4c;--ok-soft:#dcf1e5;--warn:#8a6100;--warn-soft:#f6ecd2;--tyler:#8a6100;--drive:#1f5f8b;--engine:#1d7a4c;
+--f-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#11161c;--panel:#18202a;--ink:#e3e9ef;--muted:#93a1b0;--line:#2b3644;--accent:#7ab8e4;--accent-soft:#1d3346;--ok:#6fd3a0;--ok-soft:#173326;--warn:#e3bf62;--warn-soft:#352a12;--tyler:#e3bf62;--drive:#7ab8e4;--engine:#6fd3a0;color-scheme:dark}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--f-body)}
+.wrap{max-width:980px;margin:0 auto;padding:28px 16px 56px;display:grid;gap:20px}
+header h1{font-family:var(--f-mono);font-weight:600;font-size:1.7rem;margin:0;letter-spacing:-.01em}
+header p{margin:4px 0 0;color:var(--muted);max-width:68ch}
+.tag{display:inline-block;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:4px;background:var(--warn-soft);color:var(--warn);margin-left:8px;vertical-align:middle}
+section{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:12px;min-width:0}
+h2{font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0;font-weight:600}
+input[type=text]{width:100%;font-family:var(--f-mono);font-size:1.25rem;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);text-transform:uppercase}
+input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}.seg button{font:500 .9rem var(--f-body);padding:6px 12px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.stat{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--bg)}.stat b{display:block;font:600 1.5rem var(--f-mono)}.stat span{color:var(--muted);font-size:.82rem}
+.tree{font-family:var(--f-mono);font-size:.92rem;overflow-x:auto}
+.node{margin-left:16px;border-left:1px dashed var(--line);padding-left:10px}
+.w{cursor:pointer;border-radius:4px;padding:0 2px}.w:hover{background:var(--accent-soft)}
+.head{font-weight:600}.tyler{color:var(--tyler)}.drive{color:var(--drive)}.engine{color:var(--engine)}.live{color:var(--ink);text-decoration:underline dotted}
+.loop{color:var(--muted);font-style:italic}
+.legend{font-size:.82rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;max-height:260px;overflow:auto}
+.chip{font:.78rem var(--f-mono);padding:3px 8px;border:1px solid var(--line);border-radius:999px;cursor:pointer;background:var(--bg)}
+.note{color:var(--muted);font-size:.85rem;margin:0}
+table{border-collapse:collapse;width:100%;font-size:.85rem}td,th{border-bottom:1px solid var(--line);padding:4px 6px;text-align:left;vertical-align:top}td.l{font:600 1rem var(--f-mono);width:2em}
+svg text{fill:var(--muted);font:12px var(--f-body)}
+footer{color:var(--muted);font-size:.82rem;text-align:center}footer a{color:var(--accent)}
+</style></head><body><div class="wrap">
+<header><h1>∞ACR Ball <span class="tag">SAIL · candidate</span></h1>
+<p>Every word is an acronym of positive words, and every word inside an expansion gets its own expansion. The engine keeps going until nothing new appears. Then it prunes each letter down to one anchor word. What's left is a closed ball where every acronym resolves into acronyms that already exist. Output is a candidate only: candidate ≠ proof ≠ promotion.</p></header>
+
+<section aria-labelledby="h-try"><h2 id="h-try">Expand a word</h2>
+<input type="text" id="q" value="THINK" aria-label="Word" autocomplete="off" spellcheck="false">
+<div class="seg" role="group" aria-label="View"><button data-v="full" aria-pressed="true">Full ball</button><button data-v="core" aria-pressed="false">Pruned core</button><button data-v="alpha" aria-pressed="false">Alpha core A~Z</button></div>
+<div class="legend"><span class="tyler">■ Tyler's seeds</span><span class="drive">■ from the XELA library</span><span class="engine">■ engine-made</span><span class="live">▪ your word, resolved live</span><span class="loop">↺ already on this path</span></div>
+<div class="tree" id="tree"></div>
+<p class="note">Tap any word to expand it. A branch stops when it reaches a word already on its own path. That's the point where the ball closes on itself. Type any word, even one that isn't in the ball, and it resolves into the anchors right away.</p></section>
+
+<section aria-labelledby="h-stats"><h2 id="h-stats">Growth → inversion</h2><div class="stats" id="stats"></div><div id="chart"></div>
+<p class="note">Generation 0 holds the seeds. Each generation defines every word the one before it used. Growth stops when the per-letter word pools are used up, so the ball has to close.</p></section>
+
+<section aria-labelledby="h-rules"><h2 id="h-rules">The rules</h2><table>
+<tr><td class="l">1</td><td><b>Self-anchor.</b> Slot 1 is the word itself: THINK = <i>Think</i> Hi Ideal Nice Knowledge.</td></tr>
+<tr><td class="l">2</td><td><b>Positive pool.</b> Each other slot comes from a short list of positive words for its letter.</td></tr>
+<tr><td class="l">3</td><td><b>Explore.</b> While the ball grows, each slot takes the least-used word for its letter, so meaning spreads out.</td></tr>
+<tr><td class="l">4</td><td><b>Close.</b> A word gets defined the generation after it first appears. The pools are finite, so growth has to stop.</td></tr>
+<tr><td class="l">5</td><td><b>Prune.</b> Each letter collapses to its most-used word (its anchor). Words that nothing reaches are dropped.</td></tr>
+<tr><td class="l">6</td><td><b>Locked.</b> Hand-written seeds are never rewritten.</td></tr></table></section>
+
+<section aria-labelledby="h-anchor"><h2 id="h-anchor">The 26 anchors</h2><div class="chips" id="anchors"></div></section>
+<section aria-labelledby="h-all"><h2 id="h-all">Every acronym in this view</h2><div class="chips" id="all"></div></section>
+<footer>∞ACR Ball is a SAIL experiment from the XELA language lab. Designed in XELA and built with Claude. <a href="https://4xela.ai">4xela.ai</a></footer>
+</div>
+<script>
+const CFG={"LOCKED": {"STOPP": "Stop Think Observe Plan Proceed", "STOP": "Stop Think Observe Proceed", "THINK": "Think Hi Ideal Nice Knowledge", "HI": "Hi Ideals", "IDEAL": "Ideal Deals Everyone Always Loves", "XELA": "eXplore Evalu8 Learn Apply"}, "DRIVE": {"DDEEPM": "Define Direction Evaluate Every Priority Move", "DEEPM": "Deeply Evaluate Every Priority Move", "SAIL": "Semantic Acronym Intelligence Lab", "DDD": "Decide Drive Deliver", "COMPASS": "Collect Observe Map Place Align Safeguard Surface", "COPE": "Choose Optimize Predict Execute", "RELYT": "Reveal Enlighten Lead Yield Transcend", "SPARK": "Synthesize Produce Articulate Refine Kickoff", "TVAS": "Think Validate Analyze Store", "OODA": "Observe Orient Decide Act", "TSV": "Truth Structured Visibly", "BCB": "Build Critique Better", "LLL": "Loss Less Love", "GOS": "Goal Operating System", "XMC": "Xela Mind Cycle", "VEIL": "Verified Evidence Intake Layer", "PPPP": "Perfect Proper Polish Pass", "SHIPMS": "Spirit Human Intelligence Process Memory Safety", "AAAA": "Alert Awake Aware Activ8", "CIB": "Concept Insight Bridge", "PFZ": "Predict Failsafe Zenith"}, "POOL": {"A": ["Always", "Apply", "Aware", "Aligned", "Awake"], "B": ["Build", "Better", "Bright", "Brave"], "C": ["Clarity", "Create", "Collect", "Care", "Calm"], "D": ["Deals", "Decide", "Deliver", "Define", "Dream"], "E": ["Everyone", "Explore", "Evaluate", "Enlighten", "Every"], "F": ["Focus", "Freedom", "Faith", "Flow"], "G": ["Goal", "Grow", "Good", "Grace"], "H": ["Hi", "Honor", "Human", "Hope", "Heart"], "I": ["Ideal", "Ideals", "Insight", "Intelligence", "Ideas"], "J": ["Joy", "Just", "Journey"], "K": ["Knowledge", "Kind", "Kickoff"], "L": ["Loves", "Learn", "Love", "Lead", "Light"], "M": ["Mind", "Map", "Move", "Mastery"], "N": ["Nice", "Now", "Noble", "Nurture"], "O": ["Observe", "Optimize", "Open", "Orient"], "P": ["Plan", "Proceed", "Power", "Polish", "Peace"], "Q": ["Quality", "Quest", "Quiet"], "R": ["Refine", "Reveal", "Real", "Rise"], "S": ["Stop", "Safety", "Spirit", "Smile", "Smooth"], "T": ["Think", "Truth", "Thrive", "Together", "Trust"], "U": ["Unity", "Understand", "Uplift"], "V": ["Value", "Validate", "Vision", "Victory"], "W": ["Wisdom", "Witness", "Win", "Warm"], "X": ["XELA", "Xcel", "Xplore"], "Y": ["Yes", "Yield", "You"], "Z": ["Zen", "Zenith", "Zest"]}};
+const K=w=>w.toUpperCase().replace(/[^A-Z0-9]/g,"");
+const isNum=k=>/^\d+$/.test(k);
+function run(){const P=CFG.POOL,use={},lex={},origin={},gens=[];const u=k=>use[k]||0,bump=k=>use[k]=u(k)+1;
+ let frontier=[];
+ for(const [k,v] of Object.entries({...CFG.DRIVE,...CFG.LOCKED})){lex[k]=v.split(" ");origin[k]=k in CFG.LOCKED?"tyler":"drive";for(const w of lex[k])bump(K(w));frontier.push(...lex[k])}
+ frontier.push(...Object.values(P).map(a=>a[0]));gens.push({gen:0,add:Object.keys(lex).length,total:Object.keys(lex).length});
+ const expand=w=>{const out=[w],seen=new Set([K(w)]);for(const c of K(w).slice(1)){if(isNum(c)){out.push(c);continue}
+   let c2=P[c].filter(x=>!seen.has(K(x)));if(!c2.length)c2=P[c];const pick=c2.reduce((a,b)=>u(K(b))<u(K(a))?b:a);out.push(pick);seen.add(K(pick));bump(K(pick))}return out};
+ for(let g=1;;g++){const nw=[];for(const w of frontier){const k=K(w);if(!k||isNum(k)||lex[k])continue;lex[k]=expand(w);origin[k]="engine";nw.push(k)}
+  gens.push({gen:g,add:nw.length,total:Object.keys(lex).length});if(!nw.length)break;frontier=nw.flatMap(k=>lex[k])}
+ const anchor={};for(const [c,ws] of Object.entries(P))anchor[c]=ws.reduce((a,b)=>u(K(b))>u(K(a))?b:a);
+ const coreAll={};for(const [k,v] of Object.entries(lex))coreAll[k]=origin[k]!=="engine"?v:[v[0],...v.slice(1).map(x=>isNum(K(x))||K(x)===k?x:anchor[K(x)[0]])];
+ const reach=(starts)=>{const R=new Set,st=[...starts];while(st.length){const k=st.pop();if(R.has(k)||!coreAll[k])continue;R.add(k);for(const x of coreAll[k]){const kk=K(x);if(kk&&!isNum(kk))st.push(kk)}}return R};
+ const A=Object.values(anchor).map(K);
+ const core=Object.fromEntries([...reach([...Object.keys(lex).filter(k=>origin[k]!=="engine"),...A])].map(k=>[k,coreAll[k]]));
+ const alpha=Object.fromEntries([...reach(A)].map(k=>[k,coreAll[k]]));
+ return {full:lex,core,alpha,origin,gens,anchor}}
+const B=run();let view="full";
+const dict=()=>B[view];
+const cls=k=>B.origin[k]||"engine";
+const live=k=>{const out=[k.charAt(0)+k.slice(1).toLowerCase()];for(const c of k.slice(1))out.push(isNum(c)?c:B.anchor[c]);return out};
+const exp=k=>dict()[k]||(k&&!isNum(k)?live(k):null);
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function render(k,path,d){const e=exp(k);if(!e)return"";const c=dict()[k]?cls(k):"live";
+ let h=`<div><span class="w head ${c}" data-k="${k}">${esc(k)}</span> = ${e.map(w=>{const kk=K(w);return`<span class="w ${dict()[kk]?cls(kk):"live"}" data-k="${kk}">${esc(w)}</span>`}).join(" ")}</div>`;
+ if(d<2){h+='<div class="node">';const seen=new Set;for(const w of e.slice(1)){const kk=K(w);if(!kk||isNum(kk)||seen.has(kk))continue;seen.add(kk);h+=path.includes(kk)?`<div class="loop">↺ ${esc(kk)}</div>`:render(kk,[...path,kk],d+1)}h+="</div>"}return h}
+function show(k){k=K(k);document.getElementById("q").value=k;document.getElementById("tree").innerHTML=k?render(k,[k],0):""}
+function stats(){const d=dict(),n=Object.keys(d).length;let open=0;for(const v of Object.values(d))for(const w of v){const k=K(w);if(k&&!isNum(k)&&!d[k])open++}
+ document.getElementById("stats").innerHTML=[[n,"acronyms in view"],[open,"unresolved references"],[B.gens.length-1,"generations to close"],[Object.keys(B.full).length+" → "+Object.keys(B.alpha).length,"full ball → alpha core"]].map(([b,s])=>`<div class="stat"><b>${b}</b><span>${s}</span></div>`).join("")}
+function chart(){const g=B.gens,W=640,H=140,m=Math.max(...g.map(x=>x.add)),bw=W/g.length;
+ document.getElementById("chart").innerHTML=`<svg viewBox="0 0 ${W} ${H+24}" width="100%" role="img" aria-label="New acronyms per generation">${g.map((x,i)=>{const h=Math.max(2,x.add/m*H);return`<rect x="${i*bw+14}" y="${H-h}" width="${bw-28}" height="${h}" rx="4" fill="var(--accent)" opacity=".85"/><text x="${i*bw+bw/2}" y="${H+16}" text-anchor="middle">gen ${x.gen}: +${x.add} (Σ${x.total})</text>`}).join("")}</svg>`}
+function chips(){const d=dict();document.getElementById("all").innerHTML=Object.keys(d).sort().map(k=>`<span class="chip ${cls(k)}" data-k="${k}">${k}</span>`).join("");
+ document.getElementById("anchors").innerHTML=Object.entries(B.anchor).map(([c,w])=>`<span class="chip" data-k="${K(w)}"><b>${c}</b> ${esc(w)}</span>`).join("")}
+document.addEventListener("click",e=>{const t=e.target.closest("[data-k]");if(t){show(t.dataset.k);document.getElementById("q").scrollIntoView({behavior:"smooth",block:"center"})}
+ const b=e.target.closest("button[data-v]");if(b){view=b.dataset.v;document.querySelectorAll("button[data-v]").forEach(x=>x.setAttribute("aria-pressed",x===b));stats();chips();show(document.getElementById("q").value)}});
+document.getElementById("q").addEventListener("input",e=>show(e.target.value));
+stats();chart();chips();show("THINK");
+/* Embed auto-height: tells a parent page (e.g. a Blogger post) how tall the tool is. Harmless when not embedded. */
+(function(){if(window.parent===window)return;let last=0;const send=()=>{const h=Math.ceil(document.documentElement.scrollHeight);if(h!==last){last=h;try{window.parent.postMessage({type:"acrball-height",height:h},"*")}catch(e){}}};
+ try{new ResizeObserver(send).observe(document.documentElement)}catch(e){setInterval(send,800)}send()})();
+</script></body></html>
