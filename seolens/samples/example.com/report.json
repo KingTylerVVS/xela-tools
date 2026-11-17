@@ -1,0 +1,121 @@
+{
+ "cannibalization": [
+  {
+   "cluster": "C001",
+   "competitors": [
+    "https://example.com/2026/01/free-workflow-templates.html"
+   ],
+   "owner": "https://example.com/p/workflow-templates.html",
+   "seed": "workflow templates",
+   "severity": "HIGH"
+  },
+  {
+   "cluster": "C002",
+   "competitors": [
+    "https://example.com/2026/02/getting-started.html"
+   ],
+   "owner": "https://example.com/p/memory-notes.html",
+   "seed": "ai chat memory",
+   "severity": "MED"
+  }
+ ],
+ "gaps": [
+  {
+   "action": "NEW POST",
+   "impressions": 40,
+   "phrase": "pricing plans",
+   "suggested_slug": "/pricing-plans.html",
+   "suggested_title": "Pricing Plans"
+  },
+  {
+   "action": "NEW POST",
+   "impressions": 8,
+   "phrase": "getting started workflow",
+   "suggested_slug": "/getting-started-workflow.html",
+   "suggested_title": "Getting Started Workflow"
+  }
+ ],
+ "meta": {
+  "cannibal_high": 1,
+  "cannibal_low": 9,
+  "cannibal_med": 1,
+  "clusters": 34,
+  "gaps": 2,
+  "has_gsc": true,
+  "impressions_total": 243,
+  "pages": 3,
+  "pair_rows": 4,
+  "phrases": 60,
+  "posts": 2,
+  "queries": 5,
+  "quick_wins": 3,
+  "rows": 94,
+  "thin": true,
+  "words": 279
+ },
+ "page_suggestions": [
+  {
+   "page": "https://example.com/2026/01/free-workflow-templates.html",
+   "suggested_description": "Here are ten free workflow templates you can copy today.",
+   "suggested_h1": "Free Workflow Templates",
+   "suggested_title": "Free Workflow Templates"
+  },
+  {
+   "page": "https://example.com/2026/02/getting-started.html",
+   "suggested_description": "Getting started takes ten minutes.",
+   "suggested_h1": "Getting Started",
+   "suggested_title": "Getting Started"
+  },
+  {
+   "page": "https://example.com/p/memory-notes.html",
+   "suggested_description": "Memory notes keep AI chat memory between sessions.",
+   "suggested_h1": "Keep AI Chat Memory",
+   "suggested_title": "Keep AI Chat Memory"
+  },
+  {
+   "page": "https://example.com/p/route-card.html",
+   "suggested_description": "Task routing keeps work moving.",
+   "suggested_h1": "Task Routing",
+   "suggested_title": "Task Routing — Route Card"
+  },
+  {
+   "page": "https://example.com/p/workflow-templates.html",
+   "suggested_description": "Why reusable workflow templates matter.",
+   "suggested_h1": "Reusable Workflow Templates",
+   "suggested_title": "Reusable Workflow Templates — Small Teams"
+  }
+ ],
+ "quick_wins": [
+  {
+   "link": "PAIR",
+   "link_impressions": 80,
+   "page": "https://example.com/p/workflow-templates.html",
+   "phrase": "workflow templates",
+   "position": 8.2,
+   "total": 0.9381252131754362
+  },
+  {
+   "link": "PAIR",
+   "link_impressions": 40,
+   "page": "https://example.com/2026/01/free-workflow-templates.html",
+   "phrase": "workflow templates",
+   "position": 15.0,
+   "total": 0.877439505867565
+  },
+  {
+   "link": "PAIR",
+   "link_impressions": 60,
+   "page": "https://example.com/p/memory-notes.html",
+   "phrase": "ai chat memory",
+   "position": 14.5,
+   "total": 0.8677035369227192
+  }
+ ],
+ "weights": {
+  "demand": 0.35,
+  "distinct": 0.15,
+  "fit": 0.25,
+  "penalty": 0.5,
+  "quickwin": 0.25
+ }
+}

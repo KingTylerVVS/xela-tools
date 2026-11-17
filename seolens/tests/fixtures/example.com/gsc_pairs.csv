@@ -1,0 +1,5 @@
+query,page,clicks,impressions,ctr,position
+workflow templates,https://example.com/p/workflow-templates.html,4,80,0.05,8.2
+workflow templates,https://example.com/2026/01/free-workflow-templates.html,2,40,0.05,15.0
+ai chat memory,https://example.com/p/memory-notes.html,2,60,0.0333,14.5
+pricing plans,https://example.com/2026/02/getting-started.html,0,40,0,25

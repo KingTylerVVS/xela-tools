@@ -1,0 +1,28 @@
+# XELA glyph / jargon tokens. Lowercase, one per line, '#' = comment.
+# Any token containing a non-ASCII character is treated as a glyph automatically.
+# Glyph phrases with zero Search Console impressions get the penalty term.
+∆z
+δz
+ωz
+ez
+xz
+xbcm
+ccc
+sail
+acr
+ness
+vfy
+hdf
+urt
+thor
+symc
+n1ce
+bcb
+hqb
+gos0
+dictx
+ddd
+airtp
+ppp
+mmap
+npe

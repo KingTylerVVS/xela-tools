@@ -1,0 +1,61 @@
+# SEO LENS R1 · default config
+# Every value here is frozen per run: the effective config is hashed into the receipt.
+# Override with --config my.toml (only the keys you change); paths resolve relative to the file that sets them.
+
+[site]
+allowlist = ["blog.4xela.ai"]          # harvest refuses any other host
+user_agent = "SEO-LENS/0.1 (owner audit of own site; offline-first)"
+delay_seconds = 1.0                    # min gap between requests
+timeout_seconds = 20
+feed_page_size = 150                   # Blogger feed page size
+max_pages = 500                        # sitemap mode cap
+
+[lexicon]
+stopwords = "../data/stopwords_en.txt"
+glyphs = "../data/glyphs.txt"
+
+[candidates]
+min_n = 1
+max_n = 4
+min_unigram_len = 3
+min_site_count = 2      # keep a phrase if it appears >= this many times site-wide (or in a title/H1, or is a GSC query)
+head_boost = 2          # title + H1 occurrences count this many times
+
+[weights]
+demand = 0.35
+quickwin = 0.25
+fit = 0.25
+distinct = 0.15
+penalty = 0.50
+
+[thresholds]
+quickwin_min_position = 5.0
+quickwin_max_position = 20.0
+gap_max_fit = 0.10        # searched phrase whose best page fit is below this = gap
+low_data_impressions = 10 # per-query flag
+thin_site_impressions = 1000
+thin_site_queries = 50
+cannibal_min_fit = 0.30   # a second page this "about" a cluster competes with the owner
+cluster_cosine = 0.60
+cluster_jaccard = 0.50
+cluster_top_k = 400
+
+[report]
+top_n = 25
+scores_per_page = 100     # rows per page written to scores.csv (0 = all); scoring always uses all
+title_max = 60
+description_max = 155
+acronyms = ["ai", "seo", "faq", "api", "url", "gpt", "llm", "ui", "pdf", "diy"]
+description_fallback = "{P1}: what it is, how it works, and where it fits."
+
+# Glyph → plain words in suggested titles/H1/descriptions (plain language first).
+# Sources: XELA public glossary terms (XZ, GOS0, DICTX, URT, ∆Z route · ΩZ validate · EZ execute).
+# Naming rule: never abbreviate URT alone; always "Universal Runtime (URT)".
+[expand]
+"urt" = "Universal Runtime (URT)"
+"xz" = "Memory (XZ)"
+"gos0" = "Goal Operating System (GOS0)"
+"dictx" = "Dictionary (DICTX)"
+"∆z" = "Route (∆Z)"
+"ωz" = "Validate (ΩZ)"
+"ez" = "Execute (EZ)"
