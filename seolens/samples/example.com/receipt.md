@@ -1,8 +1,8 @@
 # RECEIPT · SEO LENS R1 · seolens 0.1.0
 
-RUN_HASH: `41645c7d615f1af8f83e7856cdd1c48e3e223092600367361b8b44c7a1f873ae`  (inputs + config + outputs; timestamp excluded)
-CONFIG:   `813d82d504fff0f72bc87cfcf102ac31db3476f81ab8e52d9003523016444b68`
-TIME:     2026-11-16 23:58 CT
+RUN_HASH: `32ac092190b955217ca8eb157e402016bc6d6f75df53cf874767e2801908883f`  (inputs + config + outputs; timestamp excluded)
+CONFIG:   `2fa2d400f071a10b278db38cadf54f9e2c54f96dee1cf89e302c804f161d4123`
+TIME:     2026-11-17 01:32 CT
 
 ## Inputs
 
@@ -50,4 +50,4 @@ GSC sources:
 | report.json | `a8116cf3b02b8de369063f518d7614121b0f6b2f25be6046c2211ef19601d2f6` |
 | report.md | `0d5d383614734aad39fdf4060b567726f105a82e49a1eba8206c4afcdda8cb76` |
 
-SIGNED: SEO LENS sample (example.com fixtures) · seolens 0.1.0 (SEO LENS R1) · 2026-11-16 23:58 CT
+SIGNED: SEO LENS sample (example.com fixtures) · seolens 0.1.0 (SEO LENS R1) · 2026-11-17 01:32 CT

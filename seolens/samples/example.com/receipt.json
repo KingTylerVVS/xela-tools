@@ -18,7 +18,7 @@
   },
   "lexicon": {
    "glyphs": "sha256:17ea528ee50a36869ecc91f263b6f6b176fce3e9c25949d1137843742be18538",
-   "stopwords": "sha256:7e713936c8d662fe70c1c66f713e1b98363053322a4a5d7a40b4f4cdcb1a7f14"
+   "stopwords": "sha256:7769f8d512c8f428c1ad63dea3b1a2ee62a1488842dcfc9efc22156926b5e485"
   },
   "report": {
    "acronyms": [
@@ -69,7 +69,7 @@
    "quickwin": 0.25
   }
  },
- "config_hash": "813d82d504fff0f72bc87cfcf102ac31db3476f81ab8e52d9003523016444b68",
+ "config_hash": "2fa2d400f071a10b278db38cadf54f9e2c54f96dee1cf89e302c804f161d4123",
  "counts": {
   "cannibal_high": 1,
   "cannibal_low": 9,
@@ -150,9 +150,9 @@
    "sha256": "0d5d383614734aad39fdf4060b567726f105a82e49a1eba8206c4afcdda8cb76"
   }
  ],
- "run_hash": "41645c7d615f1af8f83e7856cdd1c48e3e223092600367361b8b44c7a1f873ae",
- "signed": "SIGNED: SEO LENS sample (example.com fixtures) · seolens 0.1.0 (SEO LENS R1) · 2026-11-16 23:58 CT",
- "timestamp": "2026-11-16 23:58 CT",
+ "run_hash": "32ac092190b955217ca8eb157e402016bc6d6f75df53cf874767e2801908883f",
+ "signed": "SIGNED: SEO LENS sample (example.com fixtures) · seolens 0.1.0 (SEO LENS R1) · 2026-11-17 01:32 CT",
+ "timestamp": "2026-11-17 01:32 CT",
  "tool": "seolens",
  "version": "0.1.0"
 }

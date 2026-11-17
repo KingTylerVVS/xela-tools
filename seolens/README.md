@@ -69,6 +69,9 @@ total = 0.35·demand + 0.25·quickwin + 0.25·fit + 0.15·distinct − 0.50·pen
 | penalty | share of glyph/jargon tokens (∆Z, XBCM…), only when the phrase has 0 impressions |
 
 Candidates are 1–4-word n-grams that don't start or end on a stopword. That is a stand-in for noun phrases, not a parser.
+`explain` tells you why a phrase isn't scored: longer than 4 words (`max_n`), starts or ends on a stopword,
+too rare, or not on any page. It also shows the raw count per page. Search Console queries are always scored, whatever their length.
+Sentences split on `. ! ? ; :` only before a space or the end of the text, so `blog.4xela.ai`, `3.11`, `10:30` and URLs stay whole.
 Clusters use leader clustering on shared tokens + Jaccard / cosine. Each cluster's owner is the page with the most clicks, or the highest coverage if there are none.
 Cannibalization severity: **HIGH** = both pages get impressions · **MED** = the cluster has demand · **LOW** = content overlap only.
 
@@ -93,7 +96,7 @@ The RUN_HASH matches `samples/example.com/receipt.md` (the config is part of the
 ```bash
 python3 -m pytest -q
 ```
-43 tests on example.com fixtures (fake numbers) cover:
+50 tests on example.com fixtures (fake numbers) cover:
 - extraction, n-gram rules, glyph flags
 - harvest: feed paging, sitemap, allowlist, robots, rate limit, rebuild from cache
 - ingest: zip, pairs, duplicates

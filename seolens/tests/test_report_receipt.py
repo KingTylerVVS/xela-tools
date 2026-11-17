@@ -132,3 +132,16 @@ def test_default_work_dirs_live_inside_seolens():
     finally:
         argparse.ArgumentParser.parse_args = real
     assert seen["work"] == str(ROOT / "work") and seen["runs"] == str(ROOT / "runs")
+
+
+def test_explain_says_why_not_scored(work_full, tmp_path, capsys):
+    cp = _cfg_file(tmp_path)
+    assert main(["--work", str(work_full), "--config", str(cp), "explain", "these workflow templates"]) == 0
+    out = capsys.readouterr().out
+    assert "starts with stopword 'these'" in out and "Raw occurrences" in out
+    assert main(["--work", str(work_full), "--config", str(cp), "explain",
+                 "reusable workflow templates cut setup time"]) == 0
+    out = capsys.readouterr().out
+    assert "6 words; candidates are 1–4 words" in out
+    assert main(["--work", str(work_full), "--config", str(cp), "explain", "quantum lasagna"]) == 0
+    assert "not found on any harvested page" in capsys.readouterr().out
