@@ -1,0 +1,25 @@
+as_of,source,keyword,metric,value,units,window_start,window_end,measured,note
+2025-12-21,google_trends,memory notes,trends_interest_latest,4,relative 0-100,2025-10-05,2025-12-21,TRUE,"relative interest 0-100, not volume"
+2025-12-21,google_trends,memory notes,trends_momentum,1.6667,ratio,2025-10-05,2025-12-21,TRUE,"relative interest 0-100, not volume"
+2025-12-21,google_trends,workflow templates,trends_interest_latest,72,relative 0-100,2025-10-05,2025-12-21,TRUE,"relative interest 0-100, not volume"
+2025-12-21,google_trends,workflow templates,trends_momentum,0.5244,ratio,2025-10-05,2025-12-21,TRUE,"relative interest 0-100, not volume"
+,search_console,ai chat memory,gsc_avg_position,14.5,rank,,,TRUE,Search Console export
+,search_console,ai chat memory,gsc_clicks,2,count,,,TRUE,Search Console export
+,search_console,ai chat memory,gsc_impressions,60,count,,,TRUE,Search Console export
+,search_console,getting started workflow,gsc_avg_position,3.1,rank,,,TRUE,Search Console export
+,search_console,getting started workflow,gsc_clicks,1,count,,,TRUE,Search Console export
+,search_console,getting started workflow,gsc_impressions,8,count,,,TRUE,Search Console export
+,search_console,pricing plans,gsc_avg_position,25.0,rank,,,TRUE,Search Console export
+,search_console,pricing plans,gsc_clicks,0,count,,,TRUE,Search Console export
+,search_console,pricing plans,gsc_impressions,40,count,,,TRUE,Search Console export
+,search_console,task routing,gsc_avg_position,32.0,rank,,,TRUE,Search Console export
+,search_console,task routing,gsc_clicks,0,count,,,TRUE,Search Console export
+,search_console,task routing,gsc_impressions,15,count,,,TRUE,Search Console export
+,search_console,workflow templates,gsc_avg_position,8.2,rank,,,TRUE,Search Console export
+,search_console,workflow templates,gsc_clicks,6,count,,,TRUE,Search Console export
+,search_console,workflow templates,gsc_impressions,120,count,,,TRUE,Search Console export
+2026-01-08T09:00:00-06:00,x_trends,#AIChatMemory,x_posts_7d,,,,,FALSE,"X posts, not search volume"
+2026-01-08T09:00:00-06:00,x_trends,#TaskRouting,x_posts_7d,0,"posts in recent ~7 days (English, excluding retweets)",2026-01-01T00:00:00.000Z,2026-01-08T00:00:00.000Z,TRUE,"X posts, not search volume"
+2026-01-08T09:00:00-06:00,x_trends,#WorkflowTemplates,x_posts_7d,140,"posts in recent ~7 days (English, excluding retweets)",2026-01-01T00:00:00.000Z,2026-01-08T00:00:00.000Z,TRUE,"X posts, not search volume"
+,x_trends,memory notes,x_posts_7d,6,"posts in recent ~7 days (English, excluding retweets)",2026-01-01T00:00:00.000Z,2026-01-08T00:00:00.000Z,TRUE,"X posts, not search volume"
+,x_trends,pricing plans,x_posts_7d,,,,,FALSE,"X posts, not search volume"

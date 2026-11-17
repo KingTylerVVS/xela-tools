@@ -1,0 +1,7 @@
+kind,query,for_term,points,latest_or_value,momentum,best_page,best_fit,on_site,note
+timeline,memory notes,,12,4,1.6667,https://example.com/p/memory-notes.html,0.8162,YES,"relative interest 0-100, not volume"
+timeline,workflow templates,,12,72,0.5244,https://example.com/p/workflow-templates.html,0.9521,YES,"relative interest 0-100, not volume"
+related_rising,workflow templates for teams,workflow templates,,+250%,,,0.0000,NO,"relative interest 0-100, not volume"
+related_rising,ai workflow templates,workflow templates,,Breakout,,,0.0000,NO,"relative interest 0-100, not volume"
+related_top,free workflow templates,workflow templates,,100,,https://example.com/2026/01/free-workflow-templates.html,0.9347,YES,"relative interest 0-100, not volume"
+related_top,workflow templates excel,workflow templates,,45,,,0.0000,NO,"relative interest 0-100, not volume"

@@ -59,3 +59,19 @@ description_fallback = "{P1}: what it is, how it works, and where it fits."
 "∆z" = "Route (∆Z)"
 "ωz" = "Validate (ΩZ)"
 "ez" = "Execute (EZ)"
+
+# ---- R2b: file-drop signals (never search demand) ----
+[social]
+momentum_days = 3          # last N daily counts vs first N; blank unless every day was measured
+
+[trends]
+recent_points = 4          # Google Trends: mean of the last N points ...
+base_points = 8            # ... vs the N points before them (relative interest, not volume)
+
+[bridges]
+sim_min = 0.05             # page similarity range for a bridge (above sim_max = overlap, see cannibalization)
+sim_max = 0.60
+shared_min_fit = 0.15      # a shared phrase must matter on both pages
+novelty_max_fit = 0.05     # an anchor must be new to the page linking to it
+max_df_share = 0.5         # phrases on more than this share of pages are too generic to bridge on
+max_pairs = 25

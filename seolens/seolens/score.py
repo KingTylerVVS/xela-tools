@@ -33,6 +33,20 @@ class ScoreResult:
     meta: dict = field(default_factory=dict)
     streams: dict = field(default_factory=dict)         # url -> (head segs, other segs)
 
+    def best_page(self, words: str):
+        """(url, fit, count) of the page that covers a phrase best; ("", 0.0, 0) if none."""
+        if not words:
+            return "", 0.0, 0
+        ptoks = words.split(" ")
+        best = ("", 0.0, 0)
+        for url in sorted(self.streams):
+            f = self.fit.get(url, {}).get(words, 0.0)
+            head, other = self.streams[url]
+            c = count_phrase(head, ptoks) + count_phrase(other, ptoks)
+            if (f, c) > (best[1], best[2]):
+                best = (url, f, c)
+        return best
+
 
 def load_corpus(work) -> list[dict]:
     p = Path(work) / "corpus.jsonl"

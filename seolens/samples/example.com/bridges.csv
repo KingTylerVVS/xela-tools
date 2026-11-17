@@ -1,0 +1,2 @@
+page_a,page_b,similarity,shared,anchor_a_to_b,anchor_b_to_a,rationale,bridge_angle
+https://example.com/2026/02/getting-started.html,https://example.com/p/route-card.html,0.1633,route card | card | route,task routing,getting started,"Readers of ""Getting Started"" already care about route card; ""∆Z Route Card"" takes them further into task routing, and it sends readers back for getting started.",How getting started and task routing connect through route card

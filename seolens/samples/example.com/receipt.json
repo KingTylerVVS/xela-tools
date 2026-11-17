@@ -1,5 +1,13 @@
 {
  "config": {
+  "bridges": {
+   "max_df_share": 0.5,
+   "max_pairs": 25,
+   "novelty_max_fit": 0.05,
+   "shared_min_fit": 0.15,
+   "sim_max": 0.6,
+   "sim_min": 0.05
+  },
   "candidates": {
    "head_boost": 2,
    "max_n": 4,
@@ -49,6 +57,9 @@
    "timeout_seconds": 20,
    "user_agent": "SEO-LENS/0.1 (owner audit of own site; offline-first)"
   },
+  "social": {
+   "momentum_days": 3
+  },
   "thresholds": {
    "cannibal_min_fit": 0.3,
    "cluster_cosine": 0.6,
@@ -61,6 +72,10 @@
    "thin_site_impressions": 1000,
    "thin_site_queries": 50
   },
+  "trends": {
+   "base_points": 8,
+   "recent_points": 4
+  },
   "weights": {
    "demand": 0.35,
    "distinct": 0.15,
@@ -69,8 +84,19 @@
    "quickwin": 0.25
   }
  },
- "config_hash": "2fa2d400f071a10b278db38cadf54f9e2c54f96dee1cf89e302c804f161d4123",
+ "config_hash": "eaa995133689c8ffeea17fbc186574694620f366f08bfc55d91a4c5325641529",
  "counts": {
+  "bridge_gate": {
+   "kept": 1,
+   "no_novel_anchor": 0,
+   "no_shared": 2,
+   "over_cap": 0,
+   "pairs_checked": 10,
+   "rivals": 2,
+   "similarity": 5,
+   "trend_only": 0
+  },
+  "bridges": 1,
   "cannibal_high": 1,
   "cannibal_low": 9,
   "cannibal_med": 1,
@@ -78,6 +104,7 @@
   "gaps": 2,
   "has_gsc": true,
   "impressions_total": 243,
+  "observations": 24,
   "pages": 3,
   "pair_rows": 4,
   "phrases": 60,
@@ -86,7 +113,9 @@
   "quick_wins": 3,
   "rows": 94,
   "thin": true,
-  "words": 279
+  "trends_rows": 6,
+  "words": 279,
+  "x_terms": 5
  },
  "gsc_skipped": [],
  "gsc_sources": [
@@ -113,6 +142,16 @@
    "bytes": 1672,
    "name": "gsc.json",
    "sha256": "255887e459edcf1020ad528d759d895ad181389e21caaa19f9bbb7c4d89c90f3"
+  },
+  {
+   "bytes": 2477,
+   "name": "x_trends.json",
+   "sha256": "b57b7faf7d6c1c3d0b508605bd69f3922ea8230eddaec108e08324f13c5f0134"
+  },
+  {
+   "bytes": 2783,
+   "name": "trends.json",
+   "sha256": "621454c78f840ea5299a25534b6e14decfdd73ea48ba07ef6af1ab41c2cb0b27"
   }
  ],
  "lane": "SEO LENS R1",
@@ -142,17 +181,33 @@
    "sha256": "dd68698ecb61052fe9f2fa95a009675056feb2250d7d00d8dfeba9263197f00f"
   },
   {
+   "name": "bridges.csv",
+   "sha256": "e189b24921ba84f2151f3cae123c18d7736dc47dcf707cbf674d0d8fe7b08a96"
+  },
+  {
+   "name": "social.csv",
+   "sha256": "f3ebc3e7465b8e4ee14f70d06d02561954e7046b75eee9eb426a926dd454ebcf"
+  },
+  {
+   "name": "trends.csv",
+   "sha256": "0b901e34cdf4dfe2451b0e7c14ae8179ea55eed0a4edbad6ca3cc1b22f42051b"
+  },
+  {
+   "name": "observations.csv",
+   "sha256": "2ada636e0acce241f7269d32c61077e415f54240b0f8e1a7b0f78ef6e5800af7"
+  },
+  {
    "name": "report.json",
-   "sha256": "a8116cf3b02b8de369063f518d7614121b0f6b2f25be6046c2211ef19601d2f6"
+   "sha256": "11af23db468a99312ff5901c9b7489f03e2b939765f849ed4282495b34604690"
   },
   {
    "name": "report.md",
-   "sha256": "0d5d383614734aad39fdf4060b567726f105a82e49a1eba8206c4afcdda8cb76"
+   "sha256": "9b4d34d879997fd479184cd7dccfd819faef92f34d91fcfb9abe49a822c249bf"
   }
  ],
- "run_hash": "32ac092190b955217ca8eb157e402016bc6d6f75df53cf874767e2801908883f",
- "signed": "SIGNED: SEO LENS sample (example.com fixtures) · seolens 0.1.0 (SEO LENS R1) · 2026-11-17 01:32 CT",
- "timestamp": "2026-11-17 01:32 CT",
+ "run_hash": "02e5c6b9a9ddda3395f544d0f505984c7bc89d5625719a603573a977190be633",
+ "signed": "SIGNED: SEO LENS sample (example.com fixtures) · seolens 0.1.0 (SEO LENS R1) · 2026-11-17 15:38 CT",
+ "timestamp": "2026-11-17 15:38 CT",
  "tool": "seolens",
  "version": "0.1.0"
 }

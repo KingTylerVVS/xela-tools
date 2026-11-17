@@ -51,6 +51,37 @@ Draft suggestions only. SEO LENS never edits the site.
 | https://example.com/p/route-card.html | Task Routing — Route Card | Task Routing | 'task routing': fit 0.65, 15 impr, pos 32.0 (INFERRED) | current title starts with a glyph; no meta description found |
 | https://example.com/p/workflow-templates.html | Reusable Workflow Templates — Small Teams | Reusable Workflow Templates | 'reusable workflow templates': fit 0.80 |  |
 
+## Bridges (pages that should link to each other)
+
+| page A | page B | A→B anchor | B→A anchor | why a reader would care |
+|---|---|---|---|---|
+| https://example.com/2026/02/getting-started.html | https://example.com/p/route-card.html | task routing | getting started | Readers of "Getting Started" already care about route card; "∆Z Route Card" takes them further into task routing, and it sends readers back for getting started. |
+
+Gate: pairs_checked 10 · rivals 2 · similarity 5 · no_shared 2 · trend_only 0 · no_novel_anchor 0 · kept 1 · over_cap 0
+
+## Social signals (X posts, not search volume)
+
+Never used as demand. Blank = not measured (never estimated); 0 = measured zero.
+
+| kind | term | X posts (7d) | momentum | on site | best page |
+|---|---|---|---|---|---|
+| hashtag | #AIChatMemory | — | — | YES | https://example.com/p/memory-notes.html |
+| hashtag | #TaskRouting | 0 | — | YES | https://example.com/p/route-card.html |
+| hashtag | #WorkflowTemplates | 140 | 1.3333 | YES | https://example.com/p/workflow-templates.html |
+| phrase | memory notes | 6 | — | YES | https://example.com/p/memory-notes.html |
+| phrase | pricing plans | — | — | NO |  |
+
+## Google Trends (relative interest 0–100, not volume)
+
+| kind | query | latest / value | momentum | on site |
+|---|---|---|---|---|
+| timeline | memory notes | 4 | 1.6667 | YES |
+| timeline | workflow templates | 72 | 0.5244 | YES |
+| related_rising | workflow templates for teams | +250% | — | NO |
+| related_rising | ai workflow templates | Breakout | — | NO |
+| related_top | free workflow templates | 100 | — | YES |
+| related_top | workflow templates excel | 45 | — | NO |
+
 ## Method
 
 total = 0.35·demand + 0.25·quickwin + 0.25·fit + 0.15·distinct − 0.5·penalty
