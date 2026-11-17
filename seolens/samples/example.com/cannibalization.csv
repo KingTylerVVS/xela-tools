@@ -1,4 +1,4 @@
-cluster,severity,seed,demand,owner,owner_basis,competitors,members
+cluster,severity,seed,impressions_sum,owner,owner_basis,competitors,members
 C001,HIGH,workflow templates,120,https://example.com/p/workflow-templates.html,clicks,"https://example.com/2026/01/free-workflow-templates.html (fit 0.93, impr 40)",workflow templates | free workflow | free workflow templates | templates | reusable workflow | reusable workflow templates | templates for small | templates for small teams | workflow templates for small | workflow | workflow template
 C002,MED,ai chat memory,60,https://example.com/p/memory-notes.html,clicks,"https://example.com/2026/02/getting-started.html (fit 0.57, impr 0)",ai chat memory | chat | memory | ai chat | chat memory | memory notes | keep ai | keep ai chat | keep ai chat memory | memory note
 C011,LOW,route,0,https://example.com/p/route-card.html,coverage,"https://example.com/2026/02/getting-started.html (fit 0.34, impr 0)",route | route card | ∆z route card | ∆z route

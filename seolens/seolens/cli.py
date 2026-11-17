@@ -7,6 +7,7 @@ import time
 from pathlib import Path
 
 from .cluster import build_clusters
+from .config import ROOT
 from .config import lexicon, load_config
 from .harvest import HarvestError, run_harvest
 from .ingest import ingest, load_gsc, write_gsc
@@ -69,7 +70,7 @@ def cmd_cluster(a):
     cfg, lex, work = _ctx(a)
     res = score(load_corpus(work), load_gsc(work), cfg, lex)
     cl = build_clusters(res, cfg, lex)
-    write_csv(work / "clusters.csv", ["cluster", "seed", "size", "demand", "owner", "severity", "competitors"],
+    write_csv(work / "clusters.csv", ["cluster", "seed", "size", "impressions_sum", "owner", "severity", "competitors"],
               [[c["cluster_id"], c["seed"], c["size"], c["demand"], c["owner"], c["severity"],
                 " | ".join(x["page"] for x in c["competitors"])] for c in cl])
     print(f"cluster → {work / 'clusters.csv'}  clusters={len(cl)}")
@@ -114,7 +115,7 @@ def cmd_explain(a):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="seo_lens", description="SEO LENS · offline-first keyword + page-fit tool")
-    ap.add_argument("--work", default="work", help="work dir (cache, corpus, gsc) [work]")
+    ap.add_argument("--work", default=str(ROOT / "work"), help="work dir (cache, corpus, gsc) [seolens/work]")
     ap.add_argument("--config", default=None, help="TOML overrides on top of config/default.toml")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
@@ -140,7 +141,7 @@ def main(argv=None):
 
     r = sub.add_parser("report", help="full run → runs/<stamp>/ (CSVs, report.md/json, receipt)")
     r.add_argument("--out", help="output dir (default runs/<YYYYmmdd-HHMMSS>)")
-    r.add_argument("--runs", default="runs")
+    r.add_argument("--runs", default=str(ROOT / "runs"), help="[seolens/runs]")
     r.add_argument("--signer", default="SEO LENS engine", help="name on the SIGNED line")
     r.set_defaults(fn=cmd_report)
 

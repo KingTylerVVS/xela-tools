@@ -1,0 +1,3 @@
+# Config used for samples/example.com (fixtures are on example.com, so the allowlist matches).
+[site]
+allowlist = ["example.com"]

@@ -53,7 +53,7 @@ def render(phrase: str, lex: Lexicon, expand: dict, cap=True, acronyms=("ai",)) 
 
 
 def slugify(text: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")[:70]
+    return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")[:70].strip("-")
 
 
 def _trim(s: str, n: int) -> str:
@@ -182,7 +182,7 @@ def build_report(corpus, gsc, cfg, lex: Lexicon, out_dir) -> dict:
                "cluster", "cluster_owner"], srows)
 
     write_csv(out / "clusters.csv",
-              ["cluster", "seed", "size", "demand", "owner", "owner_basis", "owner_coverage", "severity",
+              ["cluster", "seed", "size", "impressions_sum", "owner", "owner_basis", "owner_coverage", "severity",
                "competitors", "members"],
               [[c["cluster_id"], c["seed"], c["size"], c["demand"], c["owner"], c["owner_basis"],
                 f4(c["owner_coverage"]), c["severity"],
@@ -218,7 +218,7 @@ def build_report(corpus, gsc, cfg, lex: Lexicon, out_dir) -> dict:
     cann = sorted([c for c in clusters if c["severity"]],
                   key=lambda c: (sev_rank[c["severity"]], -c["demand"], c["cluster_id"]))
     write_csv(out / "cannibalization.csv",
-              ["cluster", "severity", "seed", "demand", "owner", "owner_basis", "competitors", "members"],
+              ["cluster", "severity", "seed", "impressions_sum", "owner", "owner_basis", "competitors", "members"],
               [[c["cluster_id"], c["severity"], c["seed"], c["demand"], c["owner"], c["owner_basis"],
                 " | ".join(f"{x['page']} (fit {x['max_fit']:.2f}, impr {x['impressions']})" for x in c["competitors"]),
                 " | ".join(c["members"][:25])] for c in cann])

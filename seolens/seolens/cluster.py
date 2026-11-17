@@ -5,6 +5,7 @@ cluster whose seed shares tokens with it AND (token Jaccard >= cluster_jaccard O
 per-page fit vectors >= cluster_cosine); otherwise it seeds a new cluster.
 Owner = most GSC clicks (pair data) → else highest coverage (sum of member fits on the page).
 Competitor = another page with a member fit >= cannibal_min_fit, or with GSC impressions for a member.
+Cluster 'demand' = raw sum of member GSC impressions (written as impressions_sum; not the 0–1 row demand).
 Severity: HIGH both owner and competitor get impressions · MED cluster has demand · LOW content overlap only.
 """
 from __future__ import annotations
