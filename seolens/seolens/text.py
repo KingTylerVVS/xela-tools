@@ -7,10 +7,13 @@ from dataclasses import dataclass
 from pathlib import Path
 
 # Sentence-ish boundaries: n-grams never cross these.
-SEG_SPLIT = re.compile(r"[.!?;:\n\r\t•·|…—–]+")
-# A token is a run of anything that is not whitespace or punctuation (hyphens and % stay inside tokens).
-TOKEN = re.compile(r"[^\s,()\[\]{}\"“”‘’'`/\\<>*#=+~^&@.!?;:|•·…—–]+")
-STRIP = "-_'’"
+# . ! ? ; : end a sentence only when followed by whitespace, a closing quote/bracket, or the end of the text,
+# so blog.4xela.ai, 3.11, 10:30 and https://… stay whole (fix R1, µEZ✦BLOG 11-17).
+SEG_SPLIT = re.compile(r"[.!?;:]+(?=[\s\"”’')\]]|$)|[\n\r\t•·|…—–]+")
+# A token is a run of anything that is not whitespace or punctuation. Hyphens, %, and dots/colons *inside* a
+# token (domains, versions, times) stay; leading/trailing ones are stripped.
+TOKEN = re.compile(r"[^\s,()\[\]{}\"“”‘’'`/\\<>*#=+~^&@!?;|•·…—–]+")
+STRIP = "-_'’.:"
 
 
 def normalize(text: str) -> str:

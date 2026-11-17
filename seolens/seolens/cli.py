@@ -14,7 +14,7 @@ from .ingest import ingest, load_gsc, write_gsc
 from .receipt import write_receipt
 from .report import OUTPUTS, build_report, f1, f4, write_csv
 from .score import load_corpus, score
-from .text import phrase_key
+from .text import count_phrase, phrase_key
 
 
 def _ctx(a):
@@ -99,10 +99,20 @@ def cmd_explain(a):
     rows = [r for r in res.rows if r["phrase"] == key and (not a.page or r["page"] == a.page)]
     W = cfg["weights"]
     if not rows:
-        print(f"'{key}' not scored on any page (not a candidate: below min_site_count, or not in the corpus).")
+        print(f"'{key}' is not scored on any page. Why:")
+        for reason in why_not_scored(key, res, cfg, lex):
+            print(f"  - {reason}")
         g = next((g for g in res.gaps if g["phrase"] == key), None)
         if g:
             print(f"  GAP: {g['impressions']} impressions, avg pos {g['position']}")
+        hits = [(u, c) for u in sorted(res.streams)
+                for c in [count_phrase(res.streams[u][0] + res.streams[u][1], key.split(" "))] if c]
+        if hits:
+            print("  Raw occurrences (counted, not scored):")
+            for u, c in hits:
+                print(f"    {c:3}  {u}")
+        print("  Note: page text = title + H1 + meta description + body. Feed harvests have no meta description;"
+              " use --sitemap for it. A phrase that is a Search Console query is always scored.")
         return
     print(f"phrase '{key}'  glyph_share={lex.glyph_frac(key.split(' ')):.2f}")
     for r in rows:
@@ -111,6 +121,29 @@ def cmd_explain(a):
             print(f"    {t:9} {r[t]:.4f} × {W[t]:.2f} = {+W[t] * r[t]:+.4f}")
         print(f"    {'penalty':9} {r['penalty']:.4f} × {W['penalty']:.2f} = {-W['penalty'] * r['penalty']:+.4f}")
         print(f"    {'TOTAL':9} {r['total']:.4f}")
+
+
+def why_not_scored(key: str, res, cfg: dict, lex) -> list[str]:
+    C = cfg["candidates"]
+    toks = key.split(" ") if key else []
+    out = []
+    if not toks:
+        return ["empty phrase after tokenising"]
+    if len(toks) > C["max_n"]:
+        out.append(f"{len(toks)} words; candidates are {C['min_n']}–{C['max_n']} words (max_n in config)")
+    if lex.is_stop(toks[0]):
+        out.append(f"starts with stopword '{toks[0]}' (candidates can't start or end on a stopword)")
+    if len(toks) > 1 and lex.is_stop(toks[-1]):
+        out.append(f"ends with stopword '{toks[-1]}'")
+    if len(toks) == 1 and len(toks[0]) < C["min_unigram_len"] and not lex.is_glyph(toks[0]):
+        out.append(f"single word shorter than min_unigram_len={C['min_unigram_len']}")
+    total = sum(count_phrase(h, toks) + count_phrase(o, toks) for h, o in res.streams.values())
+    if total == 0:
+        out.append("not found on any harvested page")
+    elif not out:
+        out.append(f"appears {total} time(s) site-wide; needs min_site_count={C['min_site_count']}"
+                   " or a title/H1 occurrence")
+    return out
 
 
 def main(argv=None):

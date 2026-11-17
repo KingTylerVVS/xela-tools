@@ -31,6 +31,7 @@ class ScoreResult:
     links: dict = field(default_factory=dict)           # phrase -> (url, "PAIR"|"INFERRED")
     fit: dict = field(default_factory=dict)             # url -> {phrase -> fit}
     meta: dict = field(default_factory=dict)
+    streams: dict = field(default_factory=dict)         # url -> (head segs, other segs)
 
 
 def load_corpus(work) -> list[dict]:
@@ -70,6 +71,7 @@ def score(corpus: list[dict], gsc: dict, cfg: dict, lex: Lexicon) -> ScoreResult
         head = tokenize_segments(rec.get("title", "")) + tokenize_segments(rec.get("h1", ""))
         other = tokenize_segments(rec.get("description", "")) + tokenize_segments(rec.get("text", ""))
         streams[rec["url"]] = (head, other)
+    res.streams = streams
 
     # --- candidate phrases ---
     counts: dict[str, Counter] = {}

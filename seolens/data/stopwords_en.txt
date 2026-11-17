@@ -159,8 +159,7 @@ your
 yours
 yourself
 yourselves
-# blog chrome
-blog
+# blog chrome (not "blog", "post", "posts", "search": real topic words on an SEO site, fix R1 11-17)
 comments
 comment
 copyright
@@ -172,13 +171,10 @@ link
 menu
 newer
 older
-post
 posted
-posts
 powered
 read
 reply
-search
 share
 subscribe
 twitter

@@ -53,3 +53,42 @@ def test_extract_without_post_body_uses_body_and_h1():
     assert ex["h1"] == "Big Title"
     assert ex["description"] == "og d"
     assert "Some text here" in ex["text"] and "x" not in ex["text"].split()
+
+
+# ---------- fix R1 (µEZ✦BLOG 11-17): dots/colons inside domains, versions, URLs, times ----------
+
+def test_domain_stays_in_one_sentence():
+    from seolens.text import segments
+    segs = segments("SEO LENS is an offline keyword and page-fit tool for blog.4xela.ai. It reads pages.", lower=False)
+    assert segs[0] == "SEO LENS is an offline keyword and page-fit tool for blog.4xela.ai"
+    assert len(segs) == 2
+
+
+def test_version_url_time_not_split():
+    from seolens.text import segments
+    assert segments("Python 3.11 or newer.", lower=False) == ["Python 3.11 or newer"]
+    assert segments("see https://x.y/z now", lower=False) == ["see https://x.y/z now"]
+    assert segments("At 10:30 we met: done.", lower=False) == ["At 10:30 we met", " done"]
+
+
+def test_tokens_keep_inner_dots_strip_outer():
+    segs = tokenize_segments("Run it on blog.4xela.ai with Python 3.11. Done.")
+    assert segs == [["run", "it", "on", "blog.4xela.ai", "with", "python", "3.11"], ["done"]]
+
+
+def test_sentence_end_before_quote_or_bracket():
+    from seolens.text import segments
+    assert len(segments('He said "done." Next one', lower=False)) == 2
+    assert len(segments("Done (really.) Next", lower=False)) == 2
+
+
+def test_description_suggestion_keeps_domain():
+    from seolens.report import _sentence_with
+    text = "SEO LENS is an offline keyword and page-fit tool for blog.4xela.ai. It reads pages."
+    assert _sentence_with(text, "page-fit tool").endswith("blog.4xela.ai")
+
+
+def test_seo_topic_words_are_not_stopwords(lex):
+    for w in ("search", "blog", "post", "posts"):
+        assert not lex.is_stop(w)
+    assert "search console csv" in set(lex.ngrams(["search", "console", "csv"]))
