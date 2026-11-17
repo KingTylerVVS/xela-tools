@@ -1,0 +1,28 @@
+{
+ "schema_version": "x_trends_sample.v1",
+ "records": [
+  {"hashtag": "#WorkflowTemplates", "topic": "workflow templates", "source": "x_counts",
+   "trend_signal": {"value": 140, "units": "posts in recent ~7 days (English, excluding retweets)",
+     "filter": "lang:en -is:retweet", "window_start": "2026-01-01T00:00:00.000Z", "window_end": "2026-01-08T00:00:00.000Z",
+     "daily": [{"start": "d1", "end": "d2", "tweet_count": 10}, {"start": "d2", "end": "d3", "tweet_count": 12},
+               {"start": "d3", "end": "d4", "tweet_count": 14}, {"start": "d4", "end": "d5", "tweet_count": 20},
+               {"start": "d5", "end": "d6", "tweet_count": 24}, {"start": "d6", "end": "d7", "tweet_count": 30},
+               {"start": "d7", "end": "d8", "tweet_count": 30}]},
+   "related_topics": ["templates"], "related_hashtags": ["#Productivity"], "date": "2026-01-08T09:00:00-06:00", "notes": "fake"},
+  {"hashtag": "#WorkflowTemplates", "topic": "planning", "source": "x_counts",
+   "trend_signal": {"value": 140, "units": "posts in recent ~7 days (English, excluding retweets)",
+     "window_start": "2026-01-01T00:00:00.000Z", "window_end": "2026-01-08T00:00:00.000Z", "daily": ["…"]},
+   "related_topics": [], "related_hashtags": [], "date": "2026-01-08T09:00:00-06:00", "notes": "fake, trimmed daily"},
+  {"hashtag": "#TaskRouting", "topic": "task routing", "source": "x_counts",
+   "trend_signal": {"value": 0, "units": "posts in recent ~7 days (English, excluding retweets)",
+     "window_start": "2026-01-01T00:00:00.000Z", "window_end": "2026-01-08T00:00:00.000Z", "daily": []},
+   "related_topics": [], "related_hashtags": [], "date": "2026-01-08T09:00:00-06:00", "notes": "measured zero"},
+  {"hashtag": "#AIChatMemory", "topic": "memory", "source": "x_counts", "trend_signal": null,
+   "related_topics": [], "related_hashtags": [], "date": "2026-01-08T09:00:00-06:00", "notes": "not measured"}
+ ],
+ "phrase_counts": {
+  "memory notes": {"value": 6, "units": "posts in recent ~7 days (English, excluding retweets)",
+                   "window_start": "2026-01-01T00:00:00.000Z", "window_end": "2026-01-08T00:00:00.000Z"},
+  "pricing plans": null
+ }
+}

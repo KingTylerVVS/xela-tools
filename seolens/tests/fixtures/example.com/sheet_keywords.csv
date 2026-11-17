@@ -1,0 +1,3 @@
+kw_id,keyword,cluster,intent,tier,target_url,added_date,source
+KW001,#WorkflowTemplates,workflows,how-to,HOLD,,2026-01-07,x_counts; core
+KW002,#TaskRouting,routing,how-to,HOLD,,2026-01-07,x_counts; core

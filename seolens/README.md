@@ -1,4 +1,4 @@
-# SEO LENS (R1)
+# SEO LENS (R2)
 
 Offline-first keyword + page-fit tool for **blog.4xela.ai**. Sibling of `acrball/` and `staracr/`:
 **generate candidates → score → prune → explain → signed receipt.**
@@ -8,6 +8,10 @@ It answers four questions in plain language:
 2. **Gaps**: phrases people search where no page is really about the topic (→ NEW POST + slug).
 3. **Cannibalization**: two pages chasing the same phrase cluster.
 4. **Page suggestions**: title / H1 / meta description drafts, plain words first and glyph names after.
+5. **Bridges**: pairs of existing pages that should link to each other, each with a one-sentence reason a reader would care.
+
+Optional file-drop signals (R2): X post counts (`x_trends.json`) and Google Trends CSV exports. They get their own tables
+and **never change the scores**. X posts are not search volume, and Trends is relative interest (0–100), not volume.
 
 Draft only. SEO LENS never edits Blogger, never logs in to Google, and never scrapes Google results or autocomplete.
 
@@ -23,7 +27,10 @@ python3 seo_lens.py harvest --feed https://blog.4xela.ai      # only network ste
 # or, for real meta descriptions (feeds don't carry them):
 # python3 seo_lens.py harvest --sitemap https://blog.4xela.ai/sitemap.xml   # ~180 requests, ~3 min
 python3 seo_lens.py ingest ~/Downloads/<GSC export>.zip        # optional but recommended
-python3 seo_lens.py report --signer "Tyler"                    # → runs/<stamp>/
+python3 seo_lens.py ingest-x inputs/x_trends.json              # optional: XXENG hashtag counts
+python3 seo_lens.py ingest-trends multiTimeline.csv relatedQueries.csv --term "ai workflows"   # optional
+python3 seo_lens.py report --signer "Tyler" --as-of 2026-11-17 # → runs/<stamp>/
+python3 seo_lens.py export-sheet --keywords Keywords.csv --observations Observations.csv --as-of 2026-11-17
 python3 seo_lens.py explain "universal runtime"                # every score term for one phrase
 ```
 
@@ -52,8 +59,34 @@ For real pairs, export a table with both *query* and *page* columns (Search Cons
 | `cannibalization.csv` | cluster · severity · owner · competing pages |
 | `page_suggestions.csv` | current vs suggested title / H1 / description, with why + notes |
 | `scores.csv` · `clusters.csv` | full working tables (cluster `impressions_sum` = raw GSC impressions, not the 0–1 demand score) |
+| `bridges.csv` | page A · page B · shared topic · anchor text both ways · reason · bridge-post angle |
+| `social.csv` | X hashtags and phrases: posts (blank = not measured, 0 = measured zero), momentum, best page |
+| `trends.csv` | Trends timeline momentum + rising/top related queries, with best page or `NO` (a content idea) |
+| `observations.csv` | every raw signal in one long table, source-labelled |
 | `report.json` | the same findings for bots |
 | `receipt.md` / `.json` | SHA-256 of inputs, config, outputs · counts · `RUN_HASH` · SIGNED line |
+
+## File-drop signals (R2)
+
+**X (`ingest-x`)** reads XXENG's `x_trends.json` as-is (schema `x_trends_sample.v1`):
+`schema_version`, `records[]`, top-level `phrase_counts`.
+- `trend_signal` is an object (`value`, `units`, `window_*`, `daily[]`) or `null`.
+- `null` stays blank and is never estimated. A measured `0` stays `0`.
+- Momentum = (mean of the last 3 days ÷ mean of the first 3) − 1. It is computed only when every day was measured.
+
+**Google Trends (`ingest-trends`)** reads the CSV exports (timeline, related queries) on their own path.
+`ingest` refuses Trends files, so their query column can't be mistaken for Search Console data.
+
+**Bridges** pass a relevance gate, and the receipt counts why pairs were dropped. A pair is kept only when:
+- the two pages are similar but not overlapping;
+- they are not rivals in a HIGH/MED cannibalization cluster;
+- they share a 2+ word topic that matters on both pages, and that topic is not just a trending term;
+- each page has something new for the other to link to.
+
+If any part is missing there is no reason sentence, so there is no pair.
+
+**KEYWORDS sheet (`export-sheet`)** writes `keywords_append.csv` and `observations_append.csv`, matching the live tab
+headers. It reuses existing `kw_id`s, skips rows already in Observations, and fills `volume` only for `x_counts`, from X post counts. Search volume is never invented. SEO LENS never writes to the sheet: pasting the rows in is a separate, approved step (B1 kill switch).
 
 ## Scoring (weights in `config/default.toml`, hashed into every receipt)
 
@@ -83,6 +116,8 @@ Glyphs become plain words in suggestions through `[expand]` in the config, e.g. 
 ```bash
 python3 seo_lens.py --work /tmp/sl --config samples/example.com/config.toml harvest --dir tests/fixtures/example.com/pages
 python3 seo_lens.py --work /tmp/sl ingest tests/fixtures/example.com/gsc_queries.csv tests/fixtures/example.com/gsc_pairs.csv
+python3 seo_lens.py --work /tmp/sl --config samples/example.com/config.toml ingest-x tests/fixtures/example.com/x_trends.json
+python3 seo_lens.py --work /tmp/sl ingest-trends tests/fixtures/example.com/trends_timeline.csv tests/fixtures/example.com/trends_related_workflow.csv --term "workflow templates"
 python3 seo_lens.py --work /tmp/sl --config samples/example.com/config.toml report --out /tmp/sl-run
 ```
 The RUN_HASH matches `samples/example.com/receipt.md` (the config is part of the hash, so use the sample's config).
@@ -96,7 +131,7 @@ The RUN_HASH matches `samples/example.com/receipt.md` (the config is part of the
 ```bash
 python3 -m pytest -q
 ```
-50 tests on example.com fixtures (fake numbers) cover:
+67 tests on example.com fixtures (fake numbers) cover:
 - extraction, n-gram rules, glyph flags
 - harvest: feed paging, sitemap, allowlist, robots, rate limit, rebuild from cache
 - ingest: zip, pairs, duplicates

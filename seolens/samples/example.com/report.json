@@ -1,4 +1,14 @@
 {
+ "bridges": [
+  {
+   "anchor_a_to_b": "task routing",
+   "anchor_b_to_a": "getting started",
+   "bridge_angle": "How getting started and task routing connect through route card",
+   "page_a": "https://example.com/2026/02/getting-started.html",
+   "page_b": "https://example.com/p/route-card.html",
+   "rationale": "Readers of \"Getting Started\" already care about route card; \"∆Z Route Card\" takes them further into task routing, and it sends readers back for getting started."
+  }
+ ],
  "cannibalization": [
   {
    "cluster": "C001",
@@ -36,6 +46,17 @@
   }
  ],
  "meta": {
+  "bridge_gate": {
+   "kept": 1,
+   "no_novel_anchor": 0,
+   "no_shared": 2,
+   "over_cap": 0,
+   "pairs_checked": 10,
+   "rivals": 2,
+   "similarity": 5,
+   "trend_only": 0
+  },
+  "bridges": 1,
   "cannibal_high": 1,
   "cannibal_low": 9,
   "cannibal_med": 1,
@@ -43,6 +64,7 @@
   "gaps": 2,
   "has_gsc": true,
   "impressions_total": 243,
+  "observations": 24,
   "pages": 3,
   "pair_rows": 4,
   "phrases": 60,
@@ -51,7 +73,9 @@
   "quick_wins": 3,
   "rows": 94,
   "thin": true,
-  "words": 279
+  "trends_rows": 6,
+  "words": 279,
+  "x_terms": 5
  },
  "page_suggestions": [
   {
@@ -111,6 +135,8 @@
    "total": 0.8677035369227192
   }
  ],
+ "social_note": "X posts, not search volume",
+ "trends_note": "relative interest 0-100, not volume",
  "weights": {
   "demand": 0.35,
   "distinct": 0.15,

@@ -1,0 +1,6 @@
+kind,term,words,topics,x_posts,measured,window_end,momentum,best_page,best_fit,on_site,note
+hashtag,#AIChatMemory,ai chat memory,memory,,FALSE,,,https://example.com/p/memory-notes.html,0.8136,YES,"X posts, not search volume"
+hashtag,#TaskRouting,task routing,task routing,0,TRUE,2026-01-08T00:00:00.000Z,,https://example.com/p/route-card.html,0.6489,YES,"X posts, not search volume"
+hashtag,#WorkflowTemplates,workflow templates,planning | workflow templates,140,TRUE,2026-01-08T00:00:00.000Z,1.3333,https://example.com/p/workflow-templates.html,0.9521,YES,"X posts, not search volume"
+phrase,memory notes,memory notes,,6,TRUE,2026-01-08T00:00:00.000Z,,https://example.com/p/memory-notes.html,0.8162,YES,"X posts, not search volume"
+phrase,pricing plans,pricing plans,,,FALSE,,,,0.0000,NO,"X posts, not search volume"

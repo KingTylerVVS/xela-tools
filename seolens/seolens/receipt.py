@@ -27,7 +27,7 @@ def write_receipt(out_dir, work, cfg: dict, meta: dict, outputs: list[str], gsc:
                   signer: str = "SEO LENS engine") -> dict:
     out, work = Path(out_dir), Path(work)
     inputs = []
-    for name in ("corpus.jsonl", "gsc.json"):
+    for name in ("corpus.jsonl", "gsc.json", "x_trends.json", "trends.json"):
         p = work / name
         if p.exists():
             inputs.append({"name": name, "sha256": sha256_file(p), "bytes": p.stat().st_size})

@@ -14,6 +14,8 @@ from .ingest import ingest, load_gsc, write_gsc
 from .receipt import write_receipt
 from .report import OUTPUTS, build_report, f1, f4, write_csv
 from .score import load_corpus, score
+from .sheet import build_sheet_rows, write_sheet_rows
+from .signals import ingest_trends, ingest_x, load_json, write_json
 from .text import count_phrase, phrase_key
 
 
@@ -53,6 +55,40 @@ def cmd_ingest(a):
     print("  NOTE: gsc.json holds real Search Console data. It stays in work/ (gitignored).")
 
 
+def cmd_ingest_x(a):
+    cfg = load_config(a.config)
+    data = ingest_x(a.file, cfg)
+    p = write_json(data, a.work, "x_trends.json")
+    m = sum(r["measured"] for r in data["records"])
+    print(f"ingest-x → {p}  records={len(data['records'])} (measured {m}, null {len(data['records']) - m}) "
+          f"phrases={len(data['phrases'])}  schema={data['schema_version'] or '?'}")
+    print("  NOTE: X post counts are social signals, never search demand.")
+
+
+def cmd_ingest_trends(a):
+    data = ingest_trends(a.files, a.term or "")
+    p = write_json(data, a.work, "trends.json")
+    print(f"ingest-trends → {p}  terms={len(data['series'])} related={len(data['related'])}")
+    for s in data["sources"]:
+        print(f"  {s['shape']:8} {s['file']}")
+    for s in data["skipped"]:
+        print("  skipped:", s)
+    print("  NOTE: Google Trends values are relative interest (0-100), not volume.")
+
+
+def cmd_export_sheet(a):
+    cfg, lex, work = _ctx(a)
+    res = score(load_corpus(work), load_gsc(work), cfg, lex) if (work / "corpus.jsonl").exists() else None
+    new_kw, obs, notes = build_sheet_rows(a.keywords, a.observations, load_json(work, "x_trends.json"),
+                                          load_gsc(work), a.as_of, res, add_queries=not a.known_only)
+    out = Path(a.out) if a.out else Path(a.runs) / ("sheet-" + time.strftime("%Y%m%d-%H%M%S"))
+    c = write_sheet_rows(out, new_kw, obs, notes)
+    print(f"export-sheet → {out}  new keywords={c['keywords_new']} observations={c['observations']}")
+    for n in notes:
+        print("  NOTE", n)
+    print("  Append-only paste into KEYWORDS (Keywords, then Observations). B1 kill switch: practice mode.")
+
+
 def cmd_score(a):
     cfg, lex, work = _ctx(a)
     res = score(load_corpus(work), load_gsc(work), cfg, lex)
@@ -82,11 +118,13 @@ def cmd_report(a):
     cfg, lex, work = _ctx(a)
     out = Path(a.out) if a.out else Path(a.runs) / time.strftime("%Y%m%d-%H%M%S")
     gsc = load_gsc(work)
-    info = build_report(load_corpus(work), gsc, cfg, lex, out)
+    info = build_report(load_corpus(work), gsc, cfg, lex, out, xt=load_json(work, "x_trends.json"),
+                        tr=load_json(work, "trends.json"), as_of=a.as_of)
     rec = write_receipt(out, work, cfg, info["meta"], OUTPUTS, gsc, signer=a.signer)
     print(f"report → {out}")
     print(f"  RUN_HASH {rec['run_hash']}")
     m = info["meta"]
+    print(f"  bridges={m['bridges']} social_terms={m['x_terms']} trends_rows={m['trends_rows']} observations={m['observations']}")
     print(f"  quick_wins={m['quick_wins']} gaps={m['gaps']} cannibal HIGH/MED/LOW="
           f"{m['cannibal_high']}/{m['cannibal_med']}/{m['cannibal_low']}"
           + ("  [THIN DATA]" if m["thin"] else "") + ("  [NO GSC]" if not m["has_gsc"] else ""))
@@ -166,6 +204,24 @@ def main(argv=None):
     i.add_argument("files", nargs="+")
     i.set_defaults(fn=cmd_ingest)
 
+    x = sub.add_parser("ingest-x", help="XXENG x_trends.json → work/x_trends.json (social signal, never demand)")
+    x.add_argument("file")
+    x.set_defaults(fn=cmd_ingest_x)
+
+    t = sub.add_parser("ingest-trends", help="Google Trends CSV exports → work/trends.json (relative, not volume)")
+    t.add_argument("files", nargs="+")
+    t.add_argument("--term", help="the search term a relatedQueries/relatedTopics file belongs to")
+    t.set_defaults(fn=cmd_ingest_trends)
+
+    s = sub.add_parser("export-sheet", help="append-ready CSVs for the KEYWORDS sheet (Keywords + Observations tabs)")
+    s.add_argument("--keywords", help="CSV export of the sheet's Keywords tab (to reuse kw_ids)")
+    s.add_argument("--observations", help="CSV export of the Observations tab (to skip rows already there)")
+    s.add_argument("--as-of", default="", help="date for Search Console rows, e.g. 2026-11-17")
+    s.add_argument("--known-only", action="store_true", help="Search Console: only keywords already in the sheet")
+    s.add_argument("--out")
+    s.add_argument("--runs", default=str(ROOT / "runs"))
+    s.set_defaults(fn=cmd_export_sheet)
+
     for name, fn, hp in (("score", cmd_score, "phrase × page scores → work/scores.csv"),
                          ("cluster", cmd_cluster, "clusters + cannibalization → work/clusters.csv")):
         p = sub.add_parser(name, help=hp)
@@ -176,6 +232,7 @@ def main(argv=None):
     r.add_argument("--out", help="output dir (default runs/<YYYYmmdd-HHMMSS>)")
     r.add_argument("--runs", default=str(ROOT / "runs"), help="[seolens/runs]")
     r.add_argument("--signer", default="SEO LENS engine", help="name on the SIGNED line")
+    r.add_argument("--as-of", default="", help="date for Search Console rows in observations.csv (e.g. 2026-11-17)")
     r.set_defaults(fn=cmd_report)
 
     e = sub.add_parser("explain", help="show every score term for one phrase")
@@ -186,7 +243,7 @@ def main(argv=None):
     a = ap.parse_args(argv)
     try:
         a.fn(a)
-    except (HarvestError, FileNotFoundError) as ex:
+    except (HarvestError, FileNotFoundError, ValueError) as ex:
         print(f"ERROR: {ex}", file=sys.stderr)
         return 2
     return 0

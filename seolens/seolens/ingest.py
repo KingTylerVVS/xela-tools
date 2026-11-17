@@ -18,6 +18,7 @@ from pathlib import Path
 
 from .config import sha256_bytes
 from .harvest import normalize_url
+from .signals import is_trends_csv
 
 FIELDS = {
     "query": {"query", "queries", "top queries", "search query"},
@@ -104,8 +105,12 @@ def ingest(paths) -> dict:
     sources, skipped = [], []
     for p in sorted(Path(x) for x in paths):
         for fname, member, b in _tables(p):
-            shape, rows = parse_table(b.decode("utf-8-sig", errors="replace"))
+            text = b.decode("utf-8-sig", errors="replace")
             label = f"{fname}:{member}" if member else fname
+            if is_trends_csv(text):
+                skipped.append(f"{label} (Google Trends file: use ingest-trends)")
+                continue
+            shape, rows = parse_table(text)
             if shape in ("other", "empty"):
                 skipped.append(label)
                 continue

@@ -10,7 +10,9 @@ import json
 import re
 from pathlib import Path
 
+from .bridges import find_bridges
 from .cluster import build_clusters
+from .signals import trend_momentum
 from .score import ScoreResult, score
 from .text import Lexicon, phrase_key, segments
 
@@ -151,10 +153,79 @@ def page_suggestions(res: ScoreResult, clusters: list, cfg: dict, lex: Lexicon) 
 # ---------- main ----------
 
 OUTPUTS = ["scores.csv", "clusters.csv", "quick_wins.csv", "gaps.csv", "page_suggestions.csv",
-           "cannibalization.csv", "report.json", "report.md"]
+           "cannibalization.csv", "bridges.csv", "social.csv", "trends.csv", "observations.csv",
+           "report.json", "report.md"]
+
+X_NOTE = "X posts, not search volume"
+T_NOTE = "relative interest 0-100, not volume"
 
 
-def build_report(corpus, gsc, cfg, lex: Lexicon, out_dir) -> dict:
+def _on_site(best):
+    url, f, c = best
+    return "YES" if f >= 0.10 else ("MENTIONED" if c > 0 else "NO")
+
+
+def _signals(res, cfg, xt, tr, as_of):
+    """social.csv, trends.csv and observations.csv rows. Nothing here touches the score."""
+    social, trends, obs = [], [], []
+    trend_words = set()
+    if xt:
+        tags = {}
+        for r in xt["records"]:
+            tags.setdefault(r["hashtag"].lower(), []).append(r)
+        for key in sorted(tags):
+            g = tags[key]
+            r = sorted(g, key=lambda x: (-x["days_measured"], x["topic"]))[0]   # fullest record
+            vals = {x["value"] for x in g}
+            note = X_NOTE + ("; CONFLICTING values across records" if len(vals) > 1 else "")
+            best = res.best_page(r["words"])
+            trend_words.add(r["words"])
+            social.append(["hashtag", r["hashtag"], r["words"], " | ".join(sorted({x["topic"] for x in g if x["topic"]})),
+                           "" if not r["measured"] else r["value"], "TRUE" if r["measured"] else "FALSE",
+                           r["window_end"], f4(r["momentum"]), best[0], f4(best[1]), _on_site(best), note])
+            obs.append([r["date"] or as_of, "x_trends", r["hashtag"], "x_posts_7d",
+                        "" if not r["measured"] else r["value"], r["units"], r["window_start"], r["window_end"],
+                        "TRUE" if r["measured"] else "FALSE", X_NOTE])
+        for p in xt["phrases"]:
+            best = res.best_page(p["words"])
+            trend_words.add(p["words"])
+            social.append(["phrase", p["phrase"], p["words"], "", "" if not p["measured"] else p["value"],
+                           "TRUE" if p["measured"] else "FALSE", p["window_end"], f4(p["momentum"]), best[0],
+                           f4(best[1]), _on_site(best), X_NOTE])
+            obs.append([as_of, "x_trends", p["phrase"], "x_posts_7d", "" if not p["measured"] else p["value"],
+                        p["units"], p["window_start"], p["window_end"], "TRUE" if p["measured"] else "FALSE", X_NOTE])
+    if tr:
+        T = cfg["trends"]
+        for term in sorted(tr["series"]):
+            pts = tr["series"][term]
+            mom = trend_momentum(pts, T["recent_points"], T["base_points"])
+            words = phrase_key(term)
+            trend_words.add(words)
+            best = res.best_page(words)
+            last = pts[-1] if pts else {"date": "", "raw": ""}
+            trends.append(["timeline", term, "", len(pts), last["raw"], f4(mom), best[0], f4(best[1]), _on_site(best), T_NOTE])
+            obs.append([last["date"], "google_trends", term, "trends_interest_latest", last["raw"], "relative 0-100",
+                        pts[0]["date"] if pts else "", last["date"], "TRUE" if pts else "FALSE", T_NOTE])
+            if mom is not None:
+                obs.append([last["date"], "google_trends", term, "trends_momentum", f4(mom), "ratio",
+                            pts[0]["date"], last["date"], "TRUE", T_NOTE])
+        for r in tr["related"]:
+            words = phrase_key(r["query"])
+            trend_words.add(words)
+            best = res.best_page(words)
+            trends.append([f"related_{r['section'].lower()}", r["query"], r["term"], "", r["raw"], "", best[0],
+                           f4(best[1]), _on_site(best), T_NOTE])
+    for q in sorted(res.qagg):
+        a = res.qagg[q]
+        for metric, v in (("gsc_impressions", a["impressions"]), ("gsc_clicks", a["clicks"]),
+                          ("gsc_avg_position", a["position"])):
+            obs.append([as_of, "search_console", q, metric, v, "count" if metric != "gsc_avg_position" else "rank",
+                        "", "", "TRUE", "Search Console export"])
+    obs.sort(key=lambda o: (o[1], o[2].lower(), o[3], str(o[0])))
+    return social, trends, obs, trend_words
+
+
+def build_report(corpus, gsc, cfg, lex: Lexicon, out_dir, xt=None, tr=None, as_of: str = "") -> dict:
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     R, expand = cfg["report"], cfg.get("expand", {})
@@ -223,7 +294,22 @@ def build_report(corpus, gsc, cfg, lex: Lexicon, out_dir) -> dict:
                 " | ".join(f"{x['page']} (fit {x['max_fit']:.2f}, impr {x['impressions']})" for x in c["competitors"]),
                 " | ".join(c["members"][:25])] for c in cann])
 
+    social, trend_rows, obs, trend_words = _signals(res, cfg, xt, tr, as_of)
+    write_csv(out / "social.csv", ["kind", "term", "words", "topics", "x_posts", "measured", "window_end", "momentum",
+                                   "best_page", "best_fit", "on_site", "note"], social)
+    write_csv(out / "trends.csv", ["kind", "query", "for_term", "points", "latest_or_value", "momentum", "best_page",
+                                   "best_fit", "on_site", "note"], trend_rows)
+    write_csv(out / "observations.csv", ["as_of", "source", "keyword", "metric", "value", "units", "window_start",
+                                         "window_end", "measured", "note"], obs)
+    bridges, gate = find_bridges(res, cfg, lex, trend_words, clusters)
+    write_csv(out / "bridges.csv", ["page_a", "page_b", "similarity", "shared", "anchor_a_to_b", "anchor_b_to_a",
+                                    "rationale", "bridge_angle"],
+              [[b["page_a"], b["page_b"], f4(b["similarity"]), " | ".join(b["shared"]), b["anchor_a_to_b"],
+                b["anchor_b_to_a"], b["rationale"], b["bridge_angle"]] for b in bridges])
+
     meta = dict(res.meta, clusters=len(clusters), quick_wins=len(qw), gaps=len(res.gaps),
+                bridges=len(bridges), bridge_gate=gate, x_terms=len(social), trends_rows=len(trend_rows),
+                observations=len(obs),
                 cannibal_high=sum(c["severity"] == "HIGH" for c in clusters),
                 cannibal_med=sum(c["severity"] == "MED" for c in clusters),
                 cannibal_low=sum(c["severity"] == "LOW" for c in clusters))
@@ -236,10 +322,14 @@ def build_report(corpus, gsc, cfg, lex: Lexicon, out_dir) -> dict:
         "cannibalization": [{"cluster": c["cluster_id"], "severity": c["severity"], "seed": c["seed"], "owner": c["owner"],
                              "competitors": [x["page"] for x in c["competitors"]]} for c in cann if c["severity"] != "LOW"][:top],
         "page_suggestions": [{k: s[k] for k in ("page", "suggested_title", "suggested_h1", "suggested_description")} for s in sugg],
+        "bridges": [{k: b[k] for k in ("page_a", "page_b", "anchor_a_to_b", "anchor_b_to_a", "rationale", "bridge_angle")}
+                    for b in bridges],
+        "social_note": X_NOTE, "trends_note": T_NOTE,
     }
     (out / "report.json").write_text(json.dumps(bot, sort_keys=True, ensure_ascii=False, indent=1,
                                                 default=lambda o: round(o, 6)) + "\n", "utf-8")
-    (out / "report.md").write_text(_markdown(meta, cfg, qw, gap_rows, cann, sugg, top), "utf-8")
+    (out / "report.md").write_text(_markdown(meta, cfg, qw, gap_rows, cann, sugg, top, bridges, gate, social,
+                                             trend_rows), "utf-8")
     return {"meta": meta, "outputs": OUTPUTS}
 
 
@@ -247,7 +337,7 @@ def _md_cell(s) -> str:
     return str(s).replace("|", "\\|").replace("\n", " ")
 
 
-def _markdown(meta, cfg, qw, gap_rows, cann, sugg, top) -> str:
+def _markdown(meta, cfg, qw, gap_rows, cann, sugg, top, bridges=(), gate=None, social=(), trend_rows=()) -> str:
     W, T = cfg["weights"], cfg["thresholds"]
     L = ["# SEO LENS report", "",
          "Draft suggestions only. SEO LENS never edits the site.", "",
@@ -295,6 +385,25 @@ def _markdown(meta, cfg, qw, gap_rows, cann, sugg, top) -> str:
           f"{_md_cell(s['why'])} | {_md_cell(s['notes'])} |" for s in sugg[:top]]
     if len(sugg) > top:
         L += ["", f"…{len(sugg) - top} more in page_suggestions.csv (with descriptions)."]
+    L += ["", "## Bridges (pages that should link to each other)", ""]
+    if bridges:
+        L += ["| page A | page B | A→B anchor | B→A anchor | why a reader would care |", "|---|---|---|---|---|"]
+        L += [f"| {_md_cell(b['page_a'])} | {_md_cell(b['page_b'])} | {_md_cell(b['anchor_a_to_b'])} | "
+              f"{_md_cell(b['anchor_b_to_a'])} | {_md_cell(b['rationale'])} |" for b in bridges[:top]]
+    else:
+        L += ["None passed the relevance gate."]
+    if gate:
+        L += ["", "Gate: " + " · ".join(f"{k} {v}" for k, v in gate.items())]
+    if social:
+        L += ["", "## Social signals (X posts, not search volume)", "",
+              "Never used as demand. Blank = not measured (never estimated); 0 = measured zero.", "",
+              "| kind | term | X posts (7d) | momentum | on site | best page |", "|---|---|---|---|---|---|"]
+        L += [f"| {s[0]} | {_md_cell(s[1])} | {s[4] if s[4] != '' else '—'} | {s[7] or '—'} | {s[10]} | {_md_cell(s[8])} |"
+              for s in social[:top]]
+    if trend_rows:
+        L += ["", "## Google Trends (relative interest 0–100, not volume)", "",
+              "| kind | query | latest / value | momentum | on site |", "|---|---|---|---|---|"]
+        L += [f"| {t[0]} | {_md_cell(t[1])} | {t[4]} | {t[5] or '—'} | {t[8]} |" for t in trend_rows[:top]]
     L += ["", "## Method", "",
           f"total = {W['demand']}·demand + {W['quickwin']}·quickwin + {W['fit']}·fit + {W['distinct']}·distinct − {W['penalty']}·penalty",
           "",

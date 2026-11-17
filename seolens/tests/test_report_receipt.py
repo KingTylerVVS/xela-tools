@@ -53,7 +53,8 @@ def test_report_outputs_and_no_timestamp_in_hashed_files(work_full, tmp_path):
     out = tmp_path / "r"
     names = {o["name"] for o in rec["outputs"]}
     assert names == {"scores.csv", "clusters.csv", "quick_wins.csv", "gaps.csv", "page_suggestions.csv",
-                     "cannibalization.csv", "report.json", "report.md"}
+                     "cannibalization.csv", "bridges.csv", "social.csv", "trends.csv", "observations.csv",
+                     "report.json", "report.md"}
     assert rec["timestamp"] not in (out / "report.md").read_text("utf-8")
     md = (out / "report.md").read_text("utf-8")
     assert "Thin data" in md and "INFERRED" in md
