@@ -1,0 +1,9 @@
+# SEO LENS: real site + Search Console data never leaves this machine
+work/
+runs/
+private/
+*.gsc.csv
+*.gsc.zip
+__pycache__/
+*.pyc
+.pytest_cache/

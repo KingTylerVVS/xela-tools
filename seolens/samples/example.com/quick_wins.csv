@@ -1,0 +1,4 @@
+phrase,page,impressions,link,link_impressions,link_clicks,position,fit,total,flags,action
+workflow templates,https://example.com/p/workflow-templates.html,120,PAIR,80,4,8.2,0.9521,0.9381,QUERY HEAD,tighten title/description
+workflow templates,https://example.com/2026/01/free-workflow-templates.html,120,PAIR,40,2,15.0,0.8513,0.8774,QUERY HEAD,tighten title/description
+ai chat memory,https://example.com/p/memory-notes.html,60,PAIR,60,2,14.5,0.8136,0.8677,QUERY,tighten title/description

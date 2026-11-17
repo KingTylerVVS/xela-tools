@@ -1,0 +1,95 @@
+phrase,page,n,count,df,impressions,link,link_impressions,link_clicks,position,demand,quickwin,fit,distinct,penalty,total,flags,cluster,cluster_owner
+workflow templates,https://example.com/p/workflow-templates.html,2,8,2,120,PAIR,80,4,8.2,1.0000,0.9163,0.9521,0.8068,0.0000,0.9381,QUERY HEAD,C001,https://example.com/p/workflow-templates.html
+workflow templates,https://example.com/2026/01/free-workflow-templates.html,2,7,2,120,PAIR,40,2,15.0,1.0000,0.7743,0.8513,0.8068,0.0000,0.8774,QUERY HEAD,C001,https://example.com/p/workflow-templates.html
+ai chat memory,https://example.com/p/memory-notes.html,3,3,1,60,PAIR,60,2,14.5,0.8572,0.8572,0.8136,1.0000,0.0000,0.8677,QUERY,C002,https://example.com/p/memory-notes.html
+task routing,https://example.com/p/route-card.html,2,2,1,15,INFERRED,15,0,32.0,0.5781,0.0000,0.6489,1.0000,0.0000,0.5146,QUERY,C003,https://example.com/p/route-card.html
+pricing plans,https://example.com/2026/02/getting-started.html,2,0,0,40,PAIR,40,0,25.0,0.7743,0.0000,0.0000,1.0000,0.0000,0.4210,QUERY NOT-ON-PAGE,C004,https://example.com/2026/02/getting-started.html
+free,https://example.com/2026/01/free-workflow-templates.html,1,6,1,0,,0,0,,0.0000,0.0000,1.0000,1.0000,0.0000,0.4000,HEAD,C005,https://example.com/2026/01/free-workflow-templates.html
+getting,https://example.com/2026/02/getting-started.html,1,4,1,0,,0,0,,0.0000,0.0000,1.0000,1.0000,0.0000,0.4000,HEAD,C006,https://example.com/2026/02/getting-started.html
+getting started,https://example.com/2026/02/getting-started.html,2,4,1,0,,0,0,,0.0000,0.0000,1.0000,1.0000,0.0000,0.4000,HEAD,C006,https://example.com/2026/02/getting-started.html
+started,https://example.com/2026/02/getting-started.html,1,4,1,0,,0,0,,0.0000,0.0000,1.0000,1.0000,0.0000,0.4000,HEAD,C007,https://example.com/2026/02/getting-started.html
+teams,https://example.com/p/workflow-templates.html,1,5,1,0,,0,0,,0.0000,0.0000,1.0000,1.0000,0.0000,0.4000,HEAD,C008,https://example.com/p/workflow-templates.html
+free workflow,https://example.com/2026/01/free-workflow-templates.html,2,5,1,0,,0,0,,0.0000,0.0000,0.9347,1.0000,0.0000,0.3837,HEAD,C001,https://example.com/p/workflow-templates.html
+free workflow templates,https://example.com/2026/01/free-workflow-templates.html,3,5,1,0,,0,0,,0.0000,0.0000,0.9347,1.0000,0.0000,0.3837,HEAD,C001,https://example.com/p/workflow-templates.html
+chat,https://example.com/p/memory-notes.html,1,4,1,0,,0,0,,0.0000,0.0000,0.9251,1.0000,0.0000,0.3813,,C002,https://example.com/p/memory-notes.html
+reusable,https://example.com/p/workflow-templates.html,1,4,1,0,,0,0,,0.0000,0.0000,0.9145,1.0000,0.0000,0.3786,,C009,https://example.com/p/workflow-templates.html
+small,https://example.com/p/workflow-templates.html,1,4,1,0,,0,0,,0.0000,0.0000,0.9145,1.0000,0.0000,0.3786,HEAD,C010,https://example.com/p/workflow-templates.html
+small teams,https://example.com/p/workflow-templates.html,2,4,1,0,,0,0,,0.0000,0.0000,0.9145,1.0000,0.0000,0.3786,HEAD,C008,https://example.com/p/workflow-templates.html
+memory,https://example.com/p/memory-notes.html,1,9,2,0,,0,0,,0.0000,0.0000,1.0000,0.8068,0.0000,0.3710,HEAD,C002,https://example.com/p/memory-notes.html
+templates,https://example.com/p/workflow-templates.html,1,8,2,0,,0,0,,0.0000,0.0000,0.9521,0.8068,0.0000,0.3590,HEAD,C001,https://example.com/p/workflow-templates.html
+ai chat,https://example.com/p/memory-notes.html,2,3,1,0,,0,0,,0.0000,0.0000,0.8136,1.0000,0.0000,0.3534,,C002,https://example.com/p/memory-notes.html
+chat memory,https://example.com/p/memory-notes.html,2,3,1,0,,0,0,,0.0000,0.0000,0.8136,1.0000,0.0000,0.3534,,C002,https://example.com/p/memory-notes.html
+reusable workflow,https://example.com/p/workflow-templates.html,2,3,1,0,,0,0,,0.0000,0.0000,0.8042,1.0000,0.0000,0.3511,,C001,https://example.com/p/workflow-templates.html
+reusable workflow templates,https://example.com/p/workflow-templates.html,3,3,1,0,,0,0,,0.0000,0.0000,0.8042,1.0000,0.0000,0.3511,,C001,https://example.com/p/workflow-templates.html
+task,https://example.com/p/route-card.html,1,3,1,0,,0,0,,0.0000,0.0000,0.8042,1.0000,0.0000,0.3511,,C003,https://example.com/p/route-card.html
+templates for small,https://example.com/p/workflow-templates.html,3,3,1,0,,0,0,,0.0000,0.0000,0.8042,1.0000,0.0000,0.3511,HEAD,C001,https://example.com/p/workflow-templates.html
+templates for small teams,https://example.com/p/workflow-templates.html,4,3,1,0,,0,0,,0.0000,0.0000,0.8042,1.0000,0.0000,0.3511,HEAD,C001,https://example.com/p/workflow-templates.html
+workflow templates for small,https://example.com/p/workflow-templates.html,4,3,1,0,,0,0,,0.0000,0.0000,0.8042,1.0000,0.0000,0.3511,HEAD,C001,https://example.com/p/workflow-templates.html
+route,https://example.com/p/route-card.html,1,7,2,0,,0,0,,0.0000,0.0000,0.9108,0.8068,0.0000,0.3487,HEAD,C011,https://example.com/p/route-card.html
+templates,https://example.com/2026/01/free-workflow-templates.html,1,7,2,0,,0,0,,0.0000,0.0000,0.8513,0.8068,0.0000,0.3339,HEAD,C001,https://example.com/p/workflow-templates.html
+memory notes,https://example.com/p/memory-notes.html,2,5,2,0,,0,0,,0.0000,0.0000,0.8162,0.8068,0.0000,0.3251,HEAD,C002,https://example.com/p/memory-notes.html
+card,https://example.com/p/route-card.html,1,5,2,0,,0,0,,0.0000,0.0000,0.8068,0.8068,0.0000,0.3227,HEAD,C012,https://example.com/p/route-card.html
+route card,https://example.com/p/route-card.html,2,5,2,0,,0,0,,0.0000,0.0000,0.8068,0.8068,0.0000,0.3227,HEAD,C011,https://example.com/p/route-card.html
+workflow,https://example.com/p/workflow-templates.html,1,11,3,0,,0,0,,0.0000,0.0000,0.8721,0.6697,0.0000,0.3185,HEAD,C001,https://example.com/p/workflow-templates.html
+keep,https://example.com/p/memory-notes.html,1,2,1,0,,0,0,,0.0000,0.0000,0.6564,1.0000,0.0000,0.3141,,C013,https://example.com/p/memory-notes.html
+keep ai,https://example.com/p/memory-notes.html,2,2,1,0,,0,0,,0.0000,0.0000,0.6564,1.0000,0.0000,0.3141,,C002,https://example.com/p/memory-notes.html
+keep ai chat,https://example.com/p/memory-notes.html,3,2,1,0,,0,0,,0.0000,0.0000,0.6564,1.0000,0.0000,0.3141,,C002,https://example.com/p/memory-notes.html
+keep ai chat memory,https://example.com/p/memory-notes.html,4,2,1,0,,0,0,,0.0000,0.0000,0.6564,1.0000,0.0000,0.3141,,C002,https://example.com/p/memory-notes.html
+plain,https://example.com/p/memory-notes.html,1,2,1,0,,0,0,,0.0000,0.0000,0.6564,1.0000,0.0000,0.3141,,C014,https://example.com/p/memory-notes.html
+handoff,https://example.com/p/workflow-templates.html,1,2,1,0,,0,0,,0.0000,0.0000,0.6489,1.0000,0.0000,0.3122,,C015,https://example.com/p/workflow-templates.html
+routing,https://example.com/p/route-card.html,1,2,1,0,,0,0,,0.0000,0.0000,0.6489,1.0000,0.0000,0.3122,,C003,https://example.com/p/route-card.html
+workflow,https://example.com/2026/01/free-workflow-templates.html,1,8,3,0,,0,0,,0.0000,0.0000,0.7387,0.6697,0.0000,0.2851,HEAD,C001,https://example.com/p/workflow-templates.html
+workflow template,https://example.com/p/workflow-templates.html,2,3,2,0,,0,0,,0.0000,0.0000,0.6489,0.8068,0.0000,0.2832,,C001,https://example.com/p/workflow-templates.html
+memory,https://example.com/2026/02/getting-started.html,1,2,2,0,,0,0,,0.0000,0.0000,0.5724,0.8068,0.0000,0.2641,HEAD,C002,https://example.com/p/memory-notes.html
+planning,https://example.com/p/workflow-templates.html,1,2,2,0,,0,0,,0.0000,0.0000,0.5235,0.8068,0.0000,0.2519,,C016,https://example.com/p/workflow-templates.html
+notes,https://example.com/p/memory-notes.html,1,7,4,0,,0,0,,0.0000,0.0000,0.6434,0.5634,0.0000,0.2454,HEAD,C017,https://example.com/p/memory-notes.html
+template,https://example.com/p/workflow-templates.html,1,3,3,0,,0,0,,0.0000,0.0000,0.5386,0.6697,0.0000,0.2351,,C018,https://example.com/p/workflow-templates.html
+∆z route card,https://example.com/p/route-card.html,3,4,1,0,,0,0,,0.0000,0.0000,0.9145,1.0000,0.3333,0.2120,GLYPH HEAD,C011,https://example.com/p/route-card.html
+card,https://example.com/2026/02/getting-started.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3381,0.8068,0.0000,0.2055,HEAD,C012,https://example.com/p/route-card.html
+memory note,https://example.com/2026/02/getting-started.html,2,1,2,0,,0,0,,0.0000,0.0000,0.3381,0.8068,0.0000,0.2055,,C002,https://example.com/p/memory-notes.html
+memory notes,https://example.com/2026/02/getting-started.html,2,1,2,0,,0,0,,0.0000,0.0000,0.3381,0.8068,0.0000,0.2055,HEAD,C002,https://example.com/p/memory-notes.html
+note,https://example.com/2026/02/getting-started.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3381,0.8068,0.0000,0.2055,,C019,https://example.com/2026/02/getting-started.html
+route,https://example.com/2026/02/getting-started.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3381,0.8068,0.0000,0.2055,HEAD,C011,https://example.com/p/route-card.html
+route card,https://example.com/2026/02/getting-started.html,2,1,2,0,,0,0,,0.0000,0.0000,0.3381,0.8068,0.0000,0.2055,HEAD,C011,https://example.com/p/route-card.html
+ten,https://example.com/2026/02/getting-started.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3381,0.8068,0.0000,0.2055,,C020,https://example.com/2026/02/getting-started.html
+week,https://example.com/2026/02/getting-started.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3381,0.8068,0.0000,0.2055,,C021,https://example.com/2026/02/getting-started.html
+write,https://example.com/2026/02/getting-started.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3381,0.8068,0.0000,0.2055,,C022,https://example.com/2026/02/getting-started.html
+copy,https://example.com/2026/01/free-workflow-templates.html,1,2,3,0,,0,0,,0.0000,0.0000,0.4062,0.6697,0.0000,0.2020,,C023,https://example.com/2026/01/free-workflow-templates.html
+best,https://example.com/p/memory-notes.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3128,0.8068,0.0000,0.1992,,C024,https://example.com/p/memory-notes.html
+good,https://example.com/p/memory-notes.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3128,0.8068,0.0000,0.1992,,C025,https://example.com/p/memory-notes.html
+memory note,https://example.com/p/memory-notes.html,2,1,2,0,,0,0,,0.0000,0.0000,0.3128,0.8068,0.0000,0.1992,,C002,https://example.com/p/memory-notes.html
+names,https://example.com/p/memory-notes.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3128,0.8068,0.0000,0.1992,,C026,https://example.com/p/memory-notes.html
+next,https://example.com/p/memory-notes.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3128,0.8068,0.0000,0.1992,,C027,https://example.com/p/memory-notes.html
+note,https://example.com/p/memory-notes.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3128,0.8068,0.0000,0.1992,,C019,https://example.com/2026/02/getting-started.html
+project,https://example.com/p/memory-notes.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3128,0.8068,0.0000,0.1992,,C028,https://example.com/p/memory-notes.html
+save,https://example.com/p/memory-notes.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3128,0.8068,0.0000,0.1992,,C029,https://example.com/p/memory-notes.html
+write,https://example.com/p/memory-notes.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3128,0.8068,0.0000,0.1992,,C022,https://example.com/2026/02/getting-started.html
+clear,https://example.com/p/workflow-templates.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3092,0.8068,0.0000,0.1983,,C030,https://example.com/p/workflow-templates.html
+good,https://example.com/p/workflow-templates.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3092,0.8068,0.0000,0.1983,,C025,https://example.com/p/memory-notes.html
+names,https://example.com/p/workflow-templates.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3092,0.8068,0.0000,0.1983,,C026,https://example.com/p/memory-notes.html
+next,https://example.com/p/route-card.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3092,0.8068,0.0000,0.1983,,C027,https://example.com/p/memory-notes.html
+project,https://example.com/p/workflow-templates.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3092,0.8068,0.0000,0.1983,,C028,https://example.com/p/memory-notes.html
+start,https://example.com/p/workflow-templates.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3092,0.8068,0.0000,0.1983,,C031,https://example.com/p/workflow-templates.html
+work,https://example.com/p/route-card.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3092,0.8068,0.0000,0.1983,,C032,https://example.com/p/route-card.html
+work,https://example.com/p/workflow-templates.html,1,1,2,0,,0,0,,0.0000,0.0000,0.3092,0.8068,0.0000,0.1983,,C032,https://example.com/p/route-card.html
+best,https://example.com/2026/01/free-workflow-templates.html,1,1,2,0,,0,0,,0.0000,0.0000,0.2890,0.8068,0.0000,0.1933,,C024,https://example.com/p/memory-notes.html
+clear,https://example.com/2026/01/free-workflow-templates.html,1,1,2,0,,0,0,,0.0000,0.0000,0.2890,0.8068,0.0000,0.1933,,C030,https://example.com/p/workflow-templates.html
+planning,https://example.com/2026/01/free-workflow-templates.html,1,1,2,0,,0,0,,0.0000,0.0000,0.2890,0.8068,0.0000,0.1933,,C016,https://example.com/p/workflow-templates.html
+save,https://example.com/2026/01/free-workflow-templates.html,1,1,2,0,,0,0,,0.0000,0.0000,0.2890,0.8068,0.0000,0.1933,,C029,https://example.com/p/memory-notes.html
+start,https://example.com/2026/01/free-workflow-templates.html,1,1,2,0,,0,0,,0.0000,0.0000,0.2890,0.8068,0.0000,0.1933,,C031,https://example.com/p/workflow-templates.html
+ten,https://example.com/2026/01/free-workflow-templates.html,1,1,2,0,,0,0,,0.0000,0.0000,0.2890,0.8068,0.0000,0.1933,,C020,https://example.com/2026/02/getting-started.html
+week,https://example.com/2026/01/free-workflow-templates.html,1,1,2,0,,0,0,,0.0000,0.0000,0.2890,0.8068,0.0000,0.1933,,C021,https://example.com/2026/02/getting-started.html
+workflow template,https://example.com/2026/01/free-workflow-templates.html,2,1,2,0,,0,0,,0.0000,0.0000,0.2890,0.8068,0.0000,0.1933,,C001,https://example.com/p/workflow-templates.html
+copy,https://example.com/2026/02/getting-started.html,1,1,3,0,,0,0,,0.0000,0.0000,0.2806,0.6697,0.0000,0.1706,,C023,https://example.com/2026/01/free-workflow-templates.html
+template,https://example.com/2026/02/getting-started.html,1,1,3,0,,0,0,,0.0000,0.0000,0.2806,0.6697,0.0000,0.1706,,C018,https://example.com/p/workflow-templates.html
+workflow,https://example.com/2026/02/getting-started.html,1,1,3,0,,0,0,,0.0000,0.0000,0.2806,0.6697,0.0000,0.1706,HEAD,C001,https://example.com/p/workflow-templates.html
+short,https://example.com/p/memory-notes.html,1,1,3,0,,0,0,,0.0000,0.0000,0.2596,0.6697,0.0000,0.1654,,C033,https://example.com/p/memory-notes.html
+copy,https://example.com/p/workflow-templates.html,1,1,3,0,,0,0,,0.0000,0.0000,0.2566,0.6697,0.0000,0.1646,,C023,https://example.com/2026/01/free-workflow-templates.html
+short,https://example.com/p/route-card.html,1,1,3,0,,0,0,,0.0000,0.0000,0.2566,0.6697,0.0000,0.1646,,C033,https://example.com/p/memory-notes.html
+short,https://example.com/2026/01/free-workflow-templates.html,1,1,3,0,,0,0,,0.0000,0.0000,0.2399,0.6697,0.0000,0.1604,,C033,https://example.com/p/memory-notes.html
+template,https://example.com/2026/01/free-workflow-templates.html,1,1,3,0,,0,0,,0.0000,0.0000,0.2399,0.6697,0.0000,0.1604,,C018,https://example.com/p/workflow-templates.html
+notes,https://example.com/2026/02/getting-started.html,1,1,4,0,,0,0,,0.0000,0.0000,0.2361,0.5634,0.0000,0.1435,HEAD,C017,https://example.com/p/memory-notes.html
+notes,https://example.com/p/route-card.html,1,1,4,0,,0,0,,0.0000,0.0000,0.2159,0.5634,0.0000,0.1385,HEAD,C017,https://example.com/p/memory-notes.html
+notes,https://example.com/p/workflow-templates.html,1,1,4,0,,0,0,,0.0000,0.0000,0.2159,0.5634,0.0000,0.1385,HEAD,C017,https://example.com/p/memory-notes.html
+∆z route,https://example.com/p/route-card.html,2,4,1,0,,0,0,,0.0000,0.0000,0.9145,1.0000,0.5000,0.1286,GLYPH HEAD,C011,https://example.com/p/route-card.html
+∆z,https://example.com/p/route-card.html,1,5,1,0,,0,0,,0.0000,0.0000,1.0000,1.0000,1.0000,-0.1000,GLYPH HEAD,C034,https://example.com/p/route-card.html

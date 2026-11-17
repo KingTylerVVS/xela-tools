@@ -1,0 +1,35 @@
+cluster,seed,size,demand,owner,owner_basis,owner_coverage,severity,competitors,members
+C001,workflow templates,11,120,https://example.com/p/workflow-templates.html,clicks,7.4463,HIGH,"https://example.com/2026/01/free-workflow-templates.html (fit 0.93, impr 40)",workflow templates | free workflow | free workflow templates | templates | reusable workflow | reusable workflow templates | templates for small | templates for small teams | workflow templates for small | workflow | workflow template
+C002,ai chat memory,10,60,https://example.com/p/memory-notes.html,clicks,7.4639,MED,"https://example.com/2026/02/getting-started.html (fit 0.57, impr 0)",ai chat memory | chat | memory | ai chat | chat memory | memory notes | keep ai | keep ai chat | keep ai chat memory | memory note
+C003,task routing,3,15,https://example.com/p/route-card.html,coverage,2.1019,,,task routing | task | routing
+C004,pricing plans,1,40,https://example.com/2026/02/getting-started.html,coverage,0.0000,,,pricing plans
+C005,free,1,0,https://example.com/2026/01/free-workflow-templates.html,coverage,1.0000,,,free
+C006,getting,2,0,https://example.com/2026/02/getting-started.html,coverage,2.0000,,,getting | getting started
+C007,started,1,0,https://example.com/2026/02/getting-started.html,coverage,1.0000,,,started
+C008,teams,2,0,https://example.com/p/workflow-templates.html,coverage,1.9145,,,teams | small teams
+C009,reusable,1,0,https://example.com/p/workflow-templates.html,coverage,0.9145,,,reusable
+C010,small,1,0,https://example.com/p/workflow-templates.html,coverage,0.9145,,,small
+C011,route,4,0,https://example.com/p/route-card.html,coverage,3.5466,LOW,"https://example.com/2026/02/getting-started.html (fit 0.34, impr 0)",route | route card | ∆z route card | ∆z route
+C012,card,1,0,https://example.com/p/route-card.html,coverage,0.8068,LOW,"https://example.com/2026/02/getting-started.html (fit 0.34, impr 0)",card
+C013,keep,1,0,https://example.com/p/memory-notes.html,coverage,0.6564,,,keep
+C014,plain,1,0,https://example.com/p/memory-notes.html,coverage,0.6564,,,plain
+C015,handoff,1,0,https://example.com/p/workflow-templates.html,coverage,0.6489,,,handoff
+C016,planning,1,0,https://example.com/p/workflow-templates.html,coverage,0.5235,,,planning
+C017,notes,1,0,https://example.com/p/memory-notes.html,coverage,0.6434,,,notes
+C018,template,1,0,https://example.com/p/workflow-templates.html,coverage,0.5386,,,template
+C019,note,1,0,https://example.com/2026/02/getting-started.html,coverage,0.3381,LOW,"https://example.com/p/memory-notes.html (fit 0.31, impr 0)",note
+C020,ten,1,0,https://example.com/2026/02/getting-started.html,coverage,0.3381,,,ten
+C021,week,1,0,https://example.com/2026/02/getting-started.html,coverage,0.3381,,,week
+C022,write,1,0,https://example.com/2026/02/getting-started.html,coverage,0.3381,LOW,"https://example.com/p/memory-notes.html (fit 0.31, impr 0)",write
+C023,copy,1,0,https://example.com/2026/01/free-workflow-templates.html,coverage,0.4062,,,copy
+C024,best,1,0,https://example.com/p/memory-notes.html,coverage,0.3128,,,best
+C025,good,1,0,https://example.com/p/memory-notes.html,coverage,0.3128,LOW,"https://example.com/p/workflow-templates.html (fit 0.31, impr 0)",good
+C026,names,1,0,https://example.com/p/memory-notes.html,coverage,0.3128,LOW,"https://example.com/p/workflow-templates.html (fit 0.31, impr 0)",names
+C027,next,1,0,https://example.com/p/memory-notes.html,coverage,0.3128,LOW,"https://example.com/p/route-card.html (fit 0.31, impr 0)",next
+C028,project,1,0,https://example.com/p/memory-notes.html,coverage,0.3128,LOW,"https://example.com/p/workflow-templates.html (fit 0.31, impr 0)",project
+C029,save,1,0,https://example.com/p/memory-notes.html,coverage,0.3128,,,save
+C030,clear,1,0,https://example.com/p/workflow-templates.html,coverage,0.3092,,,clear
+C031,start,1,0,https://example.com/p/workflow-templates.html,coverage,0.3092,,,start
+C032,work,1,0,https://example.com/p/route-card.html,coverage,0.3092,LOW,"https://example.com/p/workflow-templates.html (fit 0.31, impr 0)",work
+C033,short,1,0,https://example.com/p/memory-notes.html,coverage,0.2596,,,short
+C034,∆z,1,0,https://example.com/p/route-card.html,coverage,1.0000,,,∆z

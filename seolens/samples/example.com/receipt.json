@@ -1,0 +1,160 @@
+{
+ "config": {
+  "candidates": {
+   "head_boost": 2,
+   "max_n": 4,
+   "min_n": 1,
+   "min_site_count": 2,
+   "min_unigram_len": 3
+  },
+  "expand": {
+   "dictx": "Dictionary (DICTX)",
+   "ez": "Execute (EZ)",
+   "gos0": "Goal Operating System (GOS0)",
+   "urt": "Universal Runtime (URT)",
+   "xz": "Memory (XZ)",
+   "ωz": "Validate (ΩZ)",
+   "∆z": "Route (∆Z)"
+  },
+  "lexicon": {
+   "glyphs": "sha256:17ea528ee50a36869ecc91f263b6f6b176fce3e9c25949d1137843742be18538",
+   "stopwords": "sha256:7e713936c8d662fe70c1c66f713e1b98363053322a4a5d7a40b4f4cdcb1a7f14"
+  },
+  "report": {
+   "acronyms": [
+    "ai",
+    "seo",
+    "faq",
+    "api",
+    "url",
+    "gpt",
+    "llm",
+    "ui",
+    "pdf",
+    "diy"
+   ],
+   "description_fallback": "{P1}: what it is, how it works, and where it fits.",
+   "description_max": 155,
+   "scores_per_page": 100,
+   "title_max": 60,
+   "top_n": 25
+  },
+  "site": {
+   "allowlist": [
+    "example.com"
+   ],
+   "delay_seconds": 1.0,
+   "feed_page_size": 150,
+   "max_pages": 500,
+   "timeout_seconds": 20,
+   "user_agent": "SEO-LENS/0.1 (owner audit of own site; offline-first)"
+  },
+  "thresholds": {
+   "cannibal_min_fit": 0.3,
+   "cluster_cosine": 0.6,
+   "cluster_jaccard": 0.5,
+   "cluster_top_k": 400,
+   "gap_max_fit": 0.1,
+   "low_data_impressions": 10,
+   "quickwin_max_position": 20.0,
+   "quickwin_min_position": 5.0,
+   "thin_site_impressions": 1000,
+   "thin_site_queries": 50
+  },
+  "weights": {
+   "demand": 0.35,
+   "distinct": 0.15,
+   "fit": 0.25,
+   "penalty": 0.5,
+   "quickwin": 0.25
+  }
+ },
+ "config_hash": "813d82d504fff0f72bc87cfcf102ac31db3476f81ab8e52d9003523016444b68",
+ "counts": {
+  "cannibal_high": 1,
+  "cannibal_low": 9,
+  "cannibal_med": 1,
+  "clusters": 34,
+  "gaps": 2,
+  "has_gsc": true,
+  "impressions_total": 243,
+  "pages": 3,
+  "pair_rows": 4,
+  "phrases": 60,
+  "posts": 2,
+  "queries": 5,
+  "quick_wins": 3,
+  "rows": 94,
+  "thin": true,
+  "words": 279
+ },
+ "gsc_skipped": [
+  "gsc_countries.csv"
+ ],
+ "gsc_sources": [
+  {
+   "file": "gsc_pairs.csv",
+   "rows": 4,
+   "sha256": "bb08fe4bb3a65c55ae37999a045cb049774cfdc396c09888d3a3b2836e7492b3",
+   "shape": "pairs"
+  },
+  {
+   "file": "gsc_queries.csv",
+   "rows": 5,
+   "sha256": "221abe74d5a97e2d4951d06501da11a8a178d2774669829ecb96545fd4ab0319",
+   "shape": "queries"
+  }
+ ],
+ "inputs": [
+  {
+   "bytes": 2397,
+   "name": "corpus.jsonl",
+   "sha256": "4b6ed369bc575651658136a332ceab08885546fd5a248c622efb04ec135a0ca2"
+  },
+  {
+   "bytes": 1696,
+   "name": "gsc.json",
+   "sha256": "561691d891416dd189279dc6f3b760bcba3bdb3e520af3a13f2e90c3f07be726"
+  }
+ ],
+ "lane": "SEO LENS R1",
+ "outputs": [
+  {
+   "name": "scores.csv",
+   "sha256": "8f8d99f90c4f5b800c93b24dac506624c1f2d4623de41d60a658aaa424e3f94e"
+  },
+  {
+   "name": "clusters.csv",
+   "sha256": "4127f5dceeacaf9c9a6e1cf1040d9daa096d20509e4403652a16ec58f594cde9"
+  },
+  {
+   "name": "quick_wins.csv",
+   "sha256": "d0affa3d7b7b0a78163cf367db1865f276cb6bcedc6bb204999ea0b5c3a9df83"
+  },
+  {
+   "name": "gaps.csv",
+   "sha256": "3f003dfcff7b220349262059d291ef1ef5b6161fc4fe2f6346daa199f2b946b6"
+  },
+  {
+   "name": "page_suggestions.csv",
+   "sha256": "ca511a1c903fadac7cbae5cdbd97ce86eea005ad7486cde65e151c863b3970dd"
+  },
+  {
+   "name": "cannibalization.csv",
+   "sha256": "b395f890d91f9e2bc55453ca3d8a43797d7928d86ba9e6019377d7ec868a27cc"
+  },
+  {
+   "name": "report.json",
+   "sha256": "a8116cf3b02b8de369063f518d7614121b0f6b2f25be6046c2211ef19601d2f6"
+  },
+  {
+   "name": "report.md",
+   "sha256": "0d5d383614734aad39fdf4060b567726f105a82e49a1eba8206c4afcdda8cb76"
+  }
+ ],
+ "run_hash": "955a6d8daa9a26d762345dc3c230aafa124773739401602cc95388d8d63e3469",
+ "signed": "SIGNED: SEO LENS sample (example.com fixtures) · seolens 0.1.0 (SEO LENS R1) · 2026-11-16 22:47 CT",
+ "timestamp": "2026-11-16 22:47 CT",
+ "tool": "seolens",
+ "version": "0.1.0"
+}
