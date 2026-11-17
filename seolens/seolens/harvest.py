@@ -37,10 +37,25 @@ def kind_of(url: str) -> str:
     return "page" if "/p/" in urlsplit(url).path else "post"
 
 
-def default_transport(url: str, user_agent: str, timeout: float):
+class AllowlistRedirectHandler(urllib.request.HTTPRedirectHandler):
+    """Follow a redirect only if the new host is on the allowlist (checked before the hop)."""
+
+    def __init__(self, allowlist):
+        super().__init__()
+        self.allow = {h.lower() for h in allowlist}
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        host = (urlsplit(newurl).hostname or "").lower()
+        if host not in self.allow:
+            raise HarvestError(f"refused redirect to '{host}' (not in the allowlist) from {req.full_url}")
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
+def default_transport(url: str, user_agent: str, timeout: float, allowlist=()):
     req = urllib.request.Request(url, headers={"User-Agent": user_agent})
+    opener = urllib.request.build_opener(AllowlistRedirectHandler(allowlist or [urlsplit(url).hostname or ""]))
     try:
-        with urllib.request.urlopen(req, timeout=timeout) as r:
+        with opener.open(req, timeout=timeout) as r:
             charset = r.headers.get_content_charset() or "utf-8"
             return r.status, r.read().decode(charset, "replace")
     except urllib.error.HTTPError as e:
@@ -56,7 +71,7 @@ class Fetcher:
         self.ua = user_agent
         self.delay = float(delay)
         self.timeout = timeout
-        self.transport = transport or (lambda url: default_transport(url, user_agent, timeout))
+        self.transport = transport or (lambda url: default_transport(url, user_agent, timeout, self.allow))
         self.sleep, self.clock = sleep, clock
         self._last = None
         self._robots: dict[str, RobotFileParser] = {}

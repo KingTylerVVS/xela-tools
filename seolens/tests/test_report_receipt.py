@@ -93,8 +93,13 @@ def test_gitignore_guards_private_data():
 
 
 def test_no_credentials_in_source():
-    bad = re.compile(r"(api[_-]?key|client_secret|password|bearer\s+[a-z0-9]|ya29\.)", re.I)
-    for p in list((ROOT / "seolens").glob("*.py")) + list((ROOT / "config").glob("*.toml")):
+    words = ["api[_-]?" + "key", "client_" + "secret", "pass" + "word", "bear" + r"er\s+[a-z0-9]", "ya" + r"29\.",
+             "gh" + "p_", "sk-" + "[a-z0-9]{10}", "AIza" + "Sy"]
+    bad = re.compile("(" + "|".join(words) + ")", re.I)
+    files = [p for p in ROOT.rglob("*") if p.is_file() and ".git" not in p.parts and "__pycache__" not in p.parts
+             and p.suffix in (".py", ".toml", ".md", ".txt", ".csv", ".html", ".json", ".gitignore", "")]
+    assert len(files) > 30
+    for p in files:
         assert not bad.search(p.read_text("utf-8")), p
 
 
@@ -103,3 +108,27 @@ def test_fixtures_are_example_com_only():
         if p.is_file():
             hosts = set(re.findall(r"https?://([a-z0-9.-]+)", p.read_text("utf-8")))
             assert hosts <= {"example.com"}, (p, hosts)
+
+
+def test_slug_never_ends_on_hyphen():
+    from seolens.report import slugify
+    s = slugify("a" * 69 + " b c d")
+    assert len(s) <= 70 and not s.endswith("-") and not s.startswith("-")
+
+
+def test_default_work_dirs_live_inside_seolens():
+    import argparse
+    from seolens import cli
+    seen = {}
+    real = argparse.ArgumentParser.parse_args
+    def spy(self, *a, **k):
+        ns = real(self, *a, **k); seen.update(vars(ns)); raise SystemExit(0)
+    argparse.ArgumentParser.parse_args = spy
+    try:
+        try:
+            cli.main(["report"])
+        except SystemExit:
+            pass
+    finally:
+        argparse.ArgumentParser.parse_args = real
+    assert seen["work"] == str(ROOT / "work") and seen["runs"] == str(ROOT / "runs")

@@ -20,6 +20,8 @@ Draft only. SEO LENS never edits Blogger, never logs in to Google, and never scr
 ```bash
 cd seolens
 python3 seo_lens.py harvest --feed https://blog.4xela.ai      # only network step: ~5 requests, 1/s
+# or, for real meta descriptions (feeds don't carry them):
+# python3 seo_lens.py harvest --sitemap https://blog.4xela.ai/sitemap.xml   # ~180 requests, ~3 min
 python3 seo_lens.py ingest ~/Downloads/<GSC export>.zip        # optional but recommended
 python3 seo_lens.py report --signer "Tyler"                    # → runs/<stamp>/
 python3 seo_lens.py explain "universal runtime"                # every score term for one phrase
@@ -30,7 +32,8 @@ Checked live 2026-11-16: 171 pages + 9 posts, full content.
 Fallbacks: `--sitemap https://blog.4xela.ai/sitemap.xml` · `--dir <folder of saved .html>` ·
 no flag = rebuild `corpus.jsonl` from `work/cache/` with no network.
 
-Everything after `harvest` runs offline.
+Everything after `harvest` runs offline. `work/` and `runs/` are always created inside `seolens/`
+(gitignored there), whatever folder you run from. Redirects to hosts off the allowlist are refused before they are followed.
 
 ### Getting the Search Console export
 Search Console → **Performance** → date range (3 or 16 months) → **Export → Download CSV** (a zip).
@@ -48,7 +51,7 @@ For real pairs, export a table with both *query* and *page* columns (Search Cons
 | `gaps.csv` | phrase · impressions · action (NEW POST / EXTEND) · suggested title + slug |
 | `cannibalization.csv` | cluster · severity · owner · competing pages |
 | `page_suggestions.csv` | current vs suggested title / H1 / description, with why + notes |
-| `scores.csv` · `clusters.csv` | full working tables |
+| `scores.csv` · `clusters.csv` | full working tables (cluster `impressions_sum` = raw GSC impressions, not the 0–1 demand score) |
 | `report.json` | the same findings for bots |
 | `receipt.md` / `.json` | SHA-256 of inputs, config, outputs · counts · `RUN_HASH` · SIGNED line |
 
@@ -73,6 +76,14 @@ Glyphs become plain words in suggestions through `[expand]` in the config, e.g. 
 
 **Thin data:** the report warns when the site has fewer than 1000 impressions or fewer than 50 queries. On a small site, treat the rankings as hints.
 
+### Reproduce the sample
+```bash
+python3 seo_lens.py --work /tmp/sl --config samples/example.com/config.toml harvest --dir tests/fixtures/example.com/pages
+python3 seo_lens.py --work /tmp/sl ingest tests/fixtures/example.com/gsc_queries.csv tests/fixtures/example.com/gsc_pairs.csv
+python3 seo_lens.py --work /tmp/sl --config samples/example.com/config.toml report --out /tmp/sl-run
+```
+The RUN_HASH matches `samples/example.com/receipt.md` (the config is part of the hash, so use the sample's config).
+
 ## Guards
 - Host allowlist (`blog.4xela.ai` only), robots.txt honoured, 1 request/s, named User-Agent.
 - Real data lives only in `work/`, `runs/`, `private/` (all gitignored). Never commit a real GSC export.
@@ -82,7 +93,7 @@ Glyphs become plain words in suggestions through `[expand]` in the config, e.g. 
 ```bash
 python3 -m pytest -q
 ```
-40 tests on example.com fixtures (fake numbers) cover:
+43 tests on example.com fixtures (fake numbers) cover:
 - extraction, n-gram rules, glyph flags
 - harvest: feed paging, sitemap, allowlist, robots, rate limit, rebuild from cache
 - ingest: zip, pairs, duplicates

@@ -101,3 +101,13 @@ def test_ingest_zip_export_skips_other_tables(tmp_path):
 def test_ingest_duplicates_not_double_counted():
     d = ingest([FIX / "gsc_queries.csv", FIX / "gsc_queries.csv"])
     assert sum(q["impressions"] for q in d["queries"]) == 120 + 60 + 15 + 40 + 8
+
+
+def test_redirect_off_allowlist_refused_before_request():
+    import urllib.request
+    from seolens.harvest import AllowlistRedirectHandler
+    h = AllowlistRedirectHandler(["example.com"])
+    req = urllib.request.Request("https://example.com/p/a.html")
+    with pytest.raises(HarvestError, match="refused redirect"):
+        h.redirect_request(req, None, 301, "Moved", {}, "https://evil.example.net/x")
+    assert h.redirect_request(req, None, 301, "Moved", {}, "https://example.com/p/b.html") is not None
